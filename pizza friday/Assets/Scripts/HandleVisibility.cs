@@ -15,7 +15,7 @@ public class HandleVisibility : MonoBehaviour
 
     void Update()
     {
-        if (joystick.Vertical * joystick.Vertical + joystick.Horizontal * joystick.Horizontal > joystick.DeadZone * joystick.DeadZone)
+        if (joystick.Horizontal!=0||joystick.Vertical!=0)
         {
             im.enabled = true;
         }
