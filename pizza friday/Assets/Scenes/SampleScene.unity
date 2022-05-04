@@ -1263,9 +1263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8f2071100650540b8851d0d2bd4858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfPoints: 10
-  timeBetweenPoints: 0.1
-  originalSizeOfTheDots: 0.25
+  numberOfPoints: 30
+  timeBetweenPoints: 0.15
+  originalSizeOfTheDots: 0.4
   examplePoint: {fileID: 5776616799190067715, guid: 1ff3448daf72b804cafa27f9dd4e9474, type: 3}
   player: {fileID: 1963575707}
   joystick: {fileID: 327619210}

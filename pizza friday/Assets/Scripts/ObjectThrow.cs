@@ -30,8 +30,6 @@ public class ObjectThrow : MonoBehaviour
         prevJoystickPosition.x = joy.Horizontal;
         prevJoystickPosition.y = joy.Vertical;
         // Debug.Log(joy.Horizontal + " " + joy.Vertical);
-        Debug.Log(Physics.gravity.y);
-        
     }
 
     public void Push(Vector2 direction)

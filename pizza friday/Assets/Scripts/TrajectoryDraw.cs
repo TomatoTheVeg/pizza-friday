@@ -53,7 +53,7 @@ public class TrajectoryDraw : MonoBehaviour
     {
         float X, Y;
         X = startVelocity.x * time;
-        Y = startVelocity.y * time + Physics.gravity.y* time * time * 0.5f;
+        Y = startVelocity.y * time + Physics.gravity.y* time * time * 0.25f;
         return new Vector2(X, Y);
     }
 }
