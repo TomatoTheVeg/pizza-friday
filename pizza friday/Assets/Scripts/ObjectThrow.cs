@@ -39,8 +39,11 @@ public class ObjectThrow : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        onGround = true;
-        anim.SetBool("OnGround", true);
+        Platform p;
+        if (collision.gameObject.TryGetComponent<Platform>(out p)){
+            onGround = true;
+            anim.SetBool("OnGround", true);
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
