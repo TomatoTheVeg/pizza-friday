@@ -7,9 +7,6 @@ public class ObjectThrow : MonoBehaviour
     Rigidbody2D rb;
     [SerializeField] Joystick joy;
     [SerializeField] public float pushStrength;
-    [SerializeField] public Vector2 pushDirection;
-    [SerializeField] private GameObject partSys;
-    private ParticleSystem particleSystem;
     private Vector2 prevJoystickPosition = Vector2.zero;
     private bool onGround = false;
     [SerializeField] Animator anim;
@@ -17,7 +14,6 @@ public class ObjectThrow : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        particleSystem = partSys.GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
