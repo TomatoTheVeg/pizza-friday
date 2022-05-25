@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    public bool isJumable = true;
+    public bool isJumpable = true;
     void Start()
     {
         

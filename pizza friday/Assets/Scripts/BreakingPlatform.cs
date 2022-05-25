@@ -33,22 +33,22 @@ public class BreakingPlatform : Platform
         Invoke("Break", breakingTime);
     }
 
-    private void OnCollisionEnter2D(Collision collision)
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         PlayerBehavior p;
-        if(collision.gameObject.TryGetComponent<PlayerBehavior>(out p))
+        if (collision.gameObject.TryGetComponent<PlayerBehavior>(out p))
         {
             OnLanding();
-            Debug.Log("on landing");
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    /*private void OnCollisionExit2D(Collision2D collision)
     {
         PlayerBehavior p;
         if (collision.gameObject.TryGetComponent<PlayerBehavior>(out p))
         {
             Break();
         }
-    }
+    }*/
 }

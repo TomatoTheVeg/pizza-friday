@@ -9,6 +9,7 @@ public class ObjectThrow : MonoBehaviour
     [SerializeField] public float pushStrength;
     private Vector2 prevJoystickPosition = Vector2.zero;
     private bool onGround = false;
+    private Platform standingPlatform;
     [SerializeField] Animator anim;
     // Start is called before the first frame update
     void Start()
@@ -19,9 +20,14 @@ public class ObjectThrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (prevJoystickPosition != Vector2.zero && joy.Horizontal == 0f && joy.Vertical == 0f && onGround)
+        if (prevJoystickPosition != Vector2.zero && joy.Horizontal == 0f && joy.Vertical == 0f && onGround&&standingPlatform.isJumpable)
         {
             Push(prevJoystickPosition);
+            BreakingPlatform p;
+            if (standingPlatform != null&& standingPlatform.TryGetComponent<BreakingPlatform>(out p))
+            {
+                p.Break();
+            }
         }
         prevJoystickPosition.x = joy.Horizontal;
         prevJoystickPosition.y = joy.Vertical;
@@ -39,12 +45,14 @@ public class ObjectThrow : MonoBehaviour
         if (collision.gameObject.TryGetComponent<Platform>(out p)) { 
             onGround = true;
             anim.SetBool("OnGround", true);
+            standingPlatform = collision.gameObject.GetComponent<Platform>();
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         onGround = false;
+        standingPlatform = null;
         anim.SetBool("OnGround", false);
     }
 
