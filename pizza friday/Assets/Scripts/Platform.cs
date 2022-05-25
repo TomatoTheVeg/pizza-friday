@@ -5,14 +5,6 @@ using UnityEngine;
 public class Platform : MonoBehaviour
 {
     public bool isJumpable = true;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Range(1f, 10f)]
+    public float Roughness=1;
 }

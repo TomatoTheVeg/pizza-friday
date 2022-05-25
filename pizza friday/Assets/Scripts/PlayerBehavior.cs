@@ -61,19 +61,29 @@ public class PlayerBehavior : MonoBehaviour
 
         }
     }
-/*
-    private void OnCollision2D(Collision2D collision)
-    {
-        StickyWall w;
-        if (collision.gameObject.TryGetComponent<StickyWall>(out w))
-        {
-            rb.gravityScale = gravitySc* (1 - w.stickiness);
-            rb.velocity = Vector2.up*rb.velocity.x;
-            Debug.Log(rb.gravityScale);
 
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        Platform p;
+        if(collision.gameObject.TryGetComponent<Platform>(out p)&&collision.relativeVelocity.y==0)
+        {
+            rb.velocity = rb.velocity / p.Roughness;
+            Debug.Log("Breaking");
         }
     }
-*/
+    /*
+        private void OnCollision2D(Collision2D collision)
+        {
+            StickyWall w;
+            if (collision.gameObject.TryGetComponent<StickyWall>(out w))
+            {
+                rb.gravityScale = gravitySc* (1 - w.stickiness);
+                rb.velocity = Vector2.up*rb.velocity.x;
+                Debug.Log(rb.gravityScale);
+
+            }
+        }
+    */
     private void OnCollisionExit2D(Collision2D collision)
     {
         StickyWall w;

@@ -36,7 +36,7 @@ public class ObjectThrow : MonoBehaviour
 
     public void Push(Vector2 direction)
     {
-        rb.velocity = direction * pushStrength;
+        rb.velocity = rb.velocity+direction * pushStrength;
     }
 
     private void OnCollisionStay2D(Collision2D collision)
