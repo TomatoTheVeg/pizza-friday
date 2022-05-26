@@ -9,6 +9,7 @@ public class BreakingPlatform : Platform
     private Renderer rend;
     private GameObject player;
     private Collider2D coll;
+    private bool isBroken = false;
     void Start()
     {
         rend = GetComponent<Renderer>();
@@ -17,15 +18,20 @@ public class BreakingPlatform : Platform
 
     public void Break()
     {
-        rend.enabled = false;
-        coll.enabled = false;
-        Invoke("Restore", restoringTime);
+        if (!isBroken)
+        {
+            rend.enabled = false;
+            coll.enabled = false;
+            Invoke("Restore", restoringTime);
+            isBroken = true;
+        }
     }
 
     public void Restore()
     {
         rend.enabled = true;
         coll.enabled = true;
+        isBroken = false;
     }
 
     public void OnLanding()
