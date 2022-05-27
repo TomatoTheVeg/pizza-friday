@@ -6,14 +6,16 @@ public class PlayerBehavior : MonoBehaviour
 {
     [SerializeField] GameObject deadFloor;
     [SerializeField] GameObject startPosition;
-    [SerializeField] float maxSpeed;
+    [SerializeField] float maxSpeed, deathSpeed;
     Rigidbody2D rb;
+    PizzaTemperature pizza;
     private Collider2D floor;
     private Vector2 speed;
     private float gravitySc;
 
     private void Start()
     {
+        pizza = GetComponent<PizzaTemperature>();
         floor = deadFloor.GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         gravitySc = rb.gravityScale;
@@ -28,6 +30,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             rb.velocity = rb.velocity * maxSpeed / rb.velocity.magnitude;
         }
+        Debug.Log(rb.velocity.magnitude);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -46,19 +49,26 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        BouncePlatform p;
-        StickyWall w;
-        if (collision.gameObject.TryGetComponent<BouncePlatform>(out p))
+        Platform platform;
+        if (collision.relativeVelocity.magnitude > deathSpeed && collision.gameObject.TryGetComponent<Platform>(out platform) && platform.canKill)
         {
-            rb.velocity = p.bounceBoost*(speed + 2*VectorProjection(speed, collision.collider.gameObject.transform.rotation));
+            TeleportToStart();
+        }
+        BasicPlatform p;
+        BouncePlatform bp;
+        StickyWall sw;
+        if (collision.gameObject.TryGetComponent<BasicPlatform>(out p))
+        {
+        }
+        else if (collision.gameObject.TryGetComponent<BouncePlatform>(out bp))
+        {
+            rb.velocity = bp.bounceBoost*(speed + 2*VectorProjection(speed, collision.collider.gameObject.transform.rotation));
             Debug.Log("Bounce "+ 2 * VectorProjection(speed, collision.collider.gameObject.transform.rotation));
         }
-        else if (collision.gameObject.TryGetComponent<StickyWall>(out w))
+        else if (collision.gameObject.TryGetComponent<StickyWall>(out sw))
         {
-            rb.gravityScale = gravitySc * (1 - w.stickiness);
+            rb.gravityScale = gravitySc * (1 - sw.stickiness);
             rb.velocity = Vector2.zero;
-            Debug.Log(rb.gravityScale);
-
         }
     }
 
@@ -68,8 +78,8 @@ public class PlayerBehavior : MonoBehaviour
         if(collision.gameObject.TryGetComponent<Platform>(out p)&&collision.relativeVelocity.y==0)
         {
             rb.velocity = rb.velocity / p.Roughness;
-            Debug.Log("Breaking");
         }
+        pizza.currPizzaTemperature += p.temperatureChange*Time.deltaTime;
     }
     /*
         private void OnCollision2D(Collision2D collision)
@@ -102,5 +112,6 @@ public class PlayerBehavior : MonoBehaviour
     public void TeleportToStart()
     {
         transform.position = startPosition.transform.position;
+        rb.velocity = Vector2.zero;
     }
 }

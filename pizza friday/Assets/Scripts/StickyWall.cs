@@ -6,10 +6,6 @@ public class StickyWall : Platform
 {
     [Range(0.0f, 1.0f)]
     public float stickiness;
-    void Start()
-    {
-        
-    }
 
     void Update()
     {

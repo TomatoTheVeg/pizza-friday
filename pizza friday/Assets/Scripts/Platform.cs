@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    public bool isJumpable = true;
+    public bool isJumpable = true, canKill;
     [Range(1f, 10f)]
-    public float Roughness=1;
+    public float Roughness = 1;
+    public float temperatureChange = 0;
 }

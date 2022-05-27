@@ -143,4 +143,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isJumpable: 1
+  canKill: 1
   Roughness: 4.6

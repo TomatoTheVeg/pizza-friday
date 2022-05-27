@@ -5,9 +5,9 @@ using UnityEngine;
 public class BouncePlatform : Platform
 {
     public float bounceBoost;
-    void Start()
+    private void Awake()
     {
-        
+
     }
 
     void Update()
