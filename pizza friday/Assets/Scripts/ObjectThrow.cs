@@ -11,6 +11,8 @@ public class ObjectThrow : MonoBehaviour
     private bool onGround = false;
     private Platform standingPlatform;
     [SerializeField] Animator anim;
+    [SerializeField] AudioClip jumpSound;
+    [SerializeField] AudioSource src;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +39,8 @@ public class ObjectThrow : MonoBehaviour
     public void Push(Vector2 direction)
     {
         rb.velocity = rb.velocity+direction * pushStrength;
+        src.clip = jumpSound;
+        src.Play();
     }
 
     private void OnCollisionStay2D(Collision2D collision)

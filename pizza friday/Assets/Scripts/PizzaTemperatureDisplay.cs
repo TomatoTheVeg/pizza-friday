@@ -7,7 +7,7 @@ public class PizzaTemperatureDisplay : MonoBehaviour
 {
     [SerializeField] private PizzaTemperature pizza;
     private Text text;
-    [SerializeField]private float k1, b1, k2, b2, mediumTemperature;
+    [SerializeField]private float k1, b1, k2, b2, a, b, c=0, mediumTemperature;
     void Start()
     {
         text = GetComponent<Text>();
@@ -16,6 +16,8 @@ public class PizzaTemperatureDisplay : MonoBehaviour
         b1 = -pizza.minPizzaTemperature * k1;
         k2 = 1 /(mediumTemperature-pizza.maxPizzaTemperature);
         b2 = -pizza.maxPizzaTemperature * k2;
+        a = 1 / (mediumTemperature * mediumTemperature - pizza.minPizzaTemperature * mediumTemperature);
+        b = -a * pizza.minPizzaTemperature;
     }
 
     void Update()
@@ -23,11 +25,11 @@ public class PizzaTemperatureDisplay : MonoBehaviour
         text.text = Mathf.Floor(pizza.currPizzaTemperature)+ "°";
         if (pizza.currPizzaTemperature < mediumTemperature)
         {
-            text.color = new Color(k1 * pizza.currPizzaTemperature + b1, k1 * pizza.currPizzaTemperature + b1, 1);
+            text.color = new Color(a * pizza.currPizzaTemperature*pizza.currPizzaTemperature + b*pizza.currPizzaTemperature, a * pizza.currPizzaTemperature * pizza.currPizzaTemperature + b * pizza.currPizzaTemperature, 1);
         }
         else
         {
-            text.color = new Color(1, k2 * pizza.currPizzaTemperature + b2, k2 * pizza.currPizzaTemperature + b2);
+            text.color = new Color(1, a * Mathf.Pow(pizza.currPizzaTemperature - 2*mediumTemperature,2) + b * (pizza.currPizzaTemperature - 2 * mediumTemperature), a * Mathf.Pow(pizza.currPizzaTemperature - 2 * mediumTemperature, 2) + b * (pizza.currPizzaTemperature - 2 * mediumTemperature));
         }
 
     }

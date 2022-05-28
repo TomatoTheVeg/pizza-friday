@@ -1092,7 +1092,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2058222829867795880, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
       propertyPath: Roughness
-      value: 4.6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2058222829867795880, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
       propertyPath: temperatureChange
@@ -1145,6 +1145,10 @@ PrefabInstance:
     - target: {fileID: 2554856760313908286, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
       propertyPath: m_Name
       value: Platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630586944097068692, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
+      propertyPath: m_UseSideFriction
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
@@ -7149,7 +7153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7817435805887281109, guid: 41c05f05362287448bc1b202acaf06ff, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.7270355
+      value: 7.7
       objectReference: {fileID: 0}
     - target: {fileID: 7817435805887281109, guid: 41c05f05362287448bc1b202acaf06ff, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7661,6 +7665,9 @@ MonoBehaviour:
   b1: 0
   k2: 0
   b2: 0
+  a: 0
+  b: 0
+  c: 0
   mediumTemperature: 0
 --- !u!1001 &1939814157
 PrefabInstance:
@@ -8046,6 +8053,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 2630586944097068692, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
+      propertyPath: m_UseOneWay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630586944097068692, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
+      propertyPath: m_UseSideBounce
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
 --- !u!1001 &2027484012
@@ -8280,7 +8295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1556986002455376635, guid: ca9acb2de2512bc4e86a0f08d2c919ca, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.1605358
+      value: 1.63
       objectReference: {fileID: 0}
     - target: {fileID: 1556986002455376635, guid: ca9acb2de2512bc4e86a0f08d2c919ca, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8443,6 +8458,14 @@ PrefabInstance:
     - target: {fileID: 4701397287577668470, guid: bc062e0ae8e97db408f27338735d73ed, type: 3}
       propertyPath: m_Name
       value: Breaking platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101350910939292124, guid: bc062e0ae8e97db408f27338735d73ed, type: 3}
+      propertyPath: m_SideArc
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5101350910939292124, guid: bc062e0ae8e97db408f27338735d73ed, type: 3}
+      propertyPath: m_UseSideBounce
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc062e0ae8e97db408f27338735d73ed, type: 3}

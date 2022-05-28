@@ -7,6 +7,8 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] GameObject deadFloor;
     [SerializeField] GameObject startPosition;
     [SerializeField] float maxSpeed, deathSpeed;
+    [SerializeField] AudioClip landingSound, fatalitySound;
+    [SerializeField] AudioSource src, deathSrc, musicSrc;
     Rigidbody2D rb;
     PizzaTemperature pizza;
     private Collider2D floor;
@@ -59,6 +61,8 @@ public class PlayerBehavior : MonoBehaviour
         StickyWall sw;
         if (collision.gameObject.TryGetComponent<BasicPlatform>(out p))
         {
+            //src.clip = landingSound;
+            //src.Play();
         }
         else if (collision.gameObject.TryGetComponent<BouncePlatform>(out bp))
         {
@@ -78,8 +82,8 @@ public class PlayerBehavior : MonoBehaviour
         if(collision.gameObject.TryGetComponent<Platform>(out p)&&collision.relativeVelocity.y==0)
         {
             rb.velocity = rb.velocity / p.Roughness;
+            pizza.currPizzaTemperature += p.temperatureChange * Time.deltaTime;
         }
-        pizza.currPizzaTemperature += p.temperatureChange*Time.deltaTime;
     }
     /*
         private void OnCollision2D(Collision2D collision)
@@ -113,5 +117,8 @@ public class PlayerBehavior : MonoBehaviour
     {
         transform.position = startPosition.transform.position;
         rb.velocity = Vector2.zero;
+        deathSrc.clip = fatalitySound;
+        musicSrc.Pause();
+        deathSrc.Play();
     }
 }
