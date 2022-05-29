@@ -34,44 +34,66 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision == floor)
-        {
-            TeleportToStart();
-        }
-        BouncePlatform bp;
-        if (collision.gameObject.TryGetComponent<BouncePlatform>(out bp))
-        {
-            //rb.velocity
-            //collision.gameObject.transform.rotation.eulerAngles.z;
-        }
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Platform platform;
-        if (collision.relativeVelocity.magnitude > deathSpeed && collision.gameObject.TryGetComponent<Platform>(out platform) && platform.canKill)
+        if (collision.gameObject.TryGetComponent<Platform>(out platform))
         {
-            TeleportToStart();
-        }
-        BasicPlatform p;
-        BouncePlatform bp;
-        StickyWall sw;
-        if (collision.gameObject.TryGetComponent<BasicPlatform>(out p))
-        {
-            //src.clip = landingSound;
-            //src.Play();
-        }
-        else if (collision.gameObject.TryGetComponent<BouncePlatform>(out bp))
-        {
-            rb.velocity = bp.bounceBoost*(speed + 2*VectorProjection(speed, collision.collider.gameObject.transform.rotation));
-            Debug.Log("Bounce "+ 2 * VectorProjection(speed, collision.collider.gameObject.transform.rotation));
-        }
-        else if (collision.gameObject.TryGetComponent<StickyWall>(out sw))
-        {
-            rb.gravityScale = gravitySc * (1 - sw.stickiness);
-            rb.velocity = Vector2.zero;
+            if (collision.relativeVelocity.magnitude > deathSpeed && platform.canKill)
+            {
+                TeleportToStart();
+                return;
+            }
+            Debug.Log(platform.PlatformType);
+            
+            switch (platform.PlatformType)
+            {
+                case PlatformType.BasicPlatform:
+                    BasicPlatform p = platform.GetComponent<BasicPlatform>();
+                    break;
+                case PlatformType.BouncePlatform:
+                    BouncePlatform bp = platform.GetComponent<BouncePlatform>();
+                    rb.velocity = bp.bounceBoost * (speed + 2 * VectorProjection(speed, collision.collider.gameObject.transform.rotation));
+                    Debug.Log("Bounce " + 2 * VectorProjection(speed, collision.collider.gameObject.transform.rotation));
+                    break;
+                case PlatformType.BreakingPlatform:
+                    BreakingPlatform bkp = platform.GetComponent<BreakingPlatform>();
+                    break;     
+                case PlatformType.StickyWall:
+                    StickyWall sw = platform.GetComponent<StickyWall>();
+                    rb.gravityScale = gravitySc * (1 - sw.stickiness);
+                    rb.velocity = Vector2.zero;
+                    break;
+                case PlatformType.DeadlyPlatform:
+                    DeadlyPlatform dp = platform.GetComponent<DeadlyPlatform>();
+                    TeleportToStart();
+                    break;
+            }
+            /*
+            BasicPlatform p;
+            BouncePlatform bp;
+            StickyWall sw;
+            DeadlyPlatform dp;
+            if (collision.gameObject.TryGetComponent<BasicPlatform>(out p))
+            {
+                //src.clip = landingSound;
+                //src.Play();
+            }
+            else if (collision.gameObject.TryGetComponent<BouncePlatform>(out bp))
+            {
+                rb.velocity = bp.bounceBoost * (speed + 2 * VectorProjection(speed, collision.collider.gameObject.transform.rotation));
+                Debug.Log("Bounce " + 2 * VectorProjection(speed, collision.collider.gameObject.transform.rotation));
+            }
+            else if (collision.gameObject.TryGetComponent<StickyWall>(out sw))
+            {
+                rb.gravityScale = gravitySc * (1 - sw.stickiness);
+                rb.velocity = Vector2.zero;
+            }
+            else if (collision.gameObject.TryGetComponent<DeadlyPlatform>(out dp))
+            {
+                TeleportToStart();
+            }
+            */
         }
     }
 

@@ -8,4 +8,6 @@ public class Platform : MonoBehaviour
     [Range(1f, 10f)]
     public float Roughness = 1;
     public float temperatureChange = 0;
+    protected PlatformType pt = PlatformType.Undefined;
+    public PlatformType PlatformType { get{return pt;}}
 }

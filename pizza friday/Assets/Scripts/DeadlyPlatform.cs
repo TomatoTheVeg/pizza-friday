@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicPlatform : Platform
+public class DeadlyPlatform : Platform
 {
     private void Awake()
     {
-        pt = PlatformType.BasicPlatform;
+        pt = PlatformType.DeadlyPlatform;
     }
 }

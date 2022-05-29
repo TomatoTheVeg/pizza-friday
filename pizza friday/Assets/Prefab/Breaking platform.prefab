@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isJumpable: 1
-  breakingTime: 5
+  canKill: 0
+  Roughness: 4.6
+  temperatureChange: 0
+  breakingTime: 2
   restoringTime: 5
 --- !u!1001 &7082503340592547656
 PrefabInstance:
@@ -36,11 +39,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2554856760313908284, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -43.3612
+      value: 12.82
       objectReference: {fileID: 0}
     - target: {fileID: 2554856760313908284, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.1816
+      value: -1.73
       objectReference: {fileID: 0}
     - target: {fileID: 2554856760313908284, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -52,15 +55,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2554856760313908284, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2554856760313908284, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2554856760313908284, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2554856760313908284, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -84,14 +87,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2554856760313908286, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
       propertyPath: m_Name
-      value: Breaking platform
+      value: Breaking platform (1)
       objectReference: {fileID: 0}
     - target: {fileID: 2554856760313908287, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c71ea464b9a7ca249a3118487de41a6c, type: 2}
+    - target: {fileID: 2630586944097068692, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
+      propertyPath: m_UseSideBounce
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 280135172993001004, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
+    - {fileID: 2058222829867795880, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
 --- !u!1 &4701397287577668470 stripped
 GameObject:

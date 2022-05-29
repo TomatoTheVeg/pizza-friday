@@ -7,7 +7,7 @@ public class BouncePlatform : Platform
     public float bounceBoost;
     private void Awake()
     {
-
+        pt = PlatformType.BouncePlatform;
     }
 
     void Update()

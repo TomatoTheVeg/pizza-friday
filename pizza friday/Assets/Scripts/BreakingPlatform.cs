@@ -10,21 +10,21 @@ public class BreakingPlatform : Platform
     private GameObject player;
     private Collider2D coll;
     private bool isBroken = false;
-    void Start()
+    void Awake()
     {
+        pt = PlatformType.BreakingPlatform;
         rend = GetComponent<Renderer>();
         coll = GetComponent<Collider2D>();
     }
 
     public void Break()
     {
-        if (!isBroken)
-        {
-            rend.enabled = false;
-            coll.enabled = false;
-            Invoke("Restore", restoringTime);
-            isBroken = true;
-        }
+
+        rend.enabled = false;
+        coll.enabled = false;
+        CancelInvoke();
+        Invoke("Restore", restoringTime);
+        isBroken = true;
     }
 
     public void Restore()
@@ -32,6 +32,7 @@ public class BreakingPlatform : Platform
         rend.enabled = true;
         coll.enabled = true;
         isBroken = false;
+        CancelInvoke();
     }
 
     public void OnLanding()
