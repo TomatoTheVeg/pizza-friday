@@ -143,6 +143,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 822737089}
     - target: {fileID: 1234159844015301769, guid: 0d76c7e414039e64b85ad0a6e4a991a3, type: 3}
+      propertyPath: deathSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1234159844015301769, guid: 0d76c7e414039e64b85ad0a6e4a991a3, type: 3}
       propertyPath: startPosition
       value: 
       objectReference: {fileID: 1067384534}
@@ -156,7 +160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1234159844015301771, guid: 0d76c7e414039e64b85ad0a6e4a991a3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.206769
+      value: 2.48
       objectReference: {fileID: 0}
     - target: {fileID: 1234159844015301771, guid: 0d76c7e414039e64b85ad0a6e4a991a3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -592,6 +596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1251485110, guid: 07257648b36fe59499d2dad9f39e54c0, type: 3}
+    - {fileID: 148400938, guid: 07257648b36fe59499d2dad9f39e54c0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 07257648b36fe59499d2dad9f39e54c0, type: 3}
 --- !u!1 &636260458 stripped
 GameObject:
@@ -1014,7 +1019,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 198754273316896232, guid: b1bcb6bbd2e89434782b6f7693ff6bd0, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 198754273316896232, guid: b1bcb6bbd2e89434782b6f7693ff6bd0, type: 3}
       propertyPath: m_LocalScale.x
@@ -1168,7 +1173,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2554856760313908284, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 2554856760313908284, guid: a2ddeb75014595e43a823636f39999f8, type: 3}
       propertyPath: m_LocalScale.x

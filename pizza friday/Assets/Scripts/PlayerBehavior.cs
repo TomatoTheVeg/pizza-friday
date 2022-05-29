@@ -7,8 +7,8 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] GameObject deadFloor;
     [SerializeField] GameObject startPosition;
     [SerializeField] float maxSpeed, deathSpeed;
-    [SerializeField] AudioClip landingSound, fatalitySound;
-    [SerializeField] AudioSource src, deathSrc, musicSrc;
+    //[SerializeField] AudioClip landingSound, fatalitySound;
+   // [SerializeField] AudioSource src, deathSrc, musicSrc;
     Rigidbody2D rb;
     PizzaTemperature pizza;
     private Collider2D floor;
@@ -32,7 +32,6 @@ public class PlayerBehavior : MonoBehaviour
         {
             rb.velocity = rb.velocity * maxSpeed / rb.velocity.magnitude;
         }
-        Debug.Log(rb.velocity.magnitude);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -117,8 +116,8 @@ public class PlayerBehavior : MonoBehaviour
     {
         transform.position = startPosition.transform.position;
         rb.velocity = Vector2.zero;
-        deathSrc.clip = fatalitySound;
-        musicSrc.Pause();
-        deathSrc.Play();
+        //deathSrc.clip = fatalitySound;
+       // musicSrc.Pause();
+       // deathSrc.Play();
     }
 }

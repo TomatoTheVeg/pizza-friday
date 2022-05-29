@@ -11,8 +11,8 @@ public class ObjectThrow : MonoBehaviour
     private bool onGround = false;
     private Platform standingPlatform;
     [SerializeField] Animator anim;
-    [SerializeField] AudioClip jumpSound;
-    [SerializeField] AudioSource src;
+   // [SerializeField] AudioClip jumpSound;
+   // [SerializeField] AudioSource src;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +22,7 @@ public class ObjectThrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       // Debug.Log(prevJoystickPosition.x + " " + prevJoystickPosition.y);
         if (prevJoystickPosition != Vector2.zero && joy.Horizontal == 0f && joy.Vertical == 0f && onGround&&standingPlatform.isJumpable)
         {
             Push(prevJoystickPosition);
@@ -39,8 +40,8 @@ public class ObjectThrow : MonoBehaviour
     public void Push(Vector2 direction)
     {
         rb.velocity = rb.velocity+direction * pushStrength;
-        src.clip = jumpSound;
-        src.Play();
+       // src.clip = jumpSound;
+        //src.Play();
     }
 
     private void OnCollisionStay2D(Collision2D collision)
