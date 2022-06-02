@@ -5,46 +5,71 @@ using UnityEngine;
 public class CamBehaviour : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    public float xMargin = 1f;
-    public float zMargin = 1f;
-    public float xSmooth = 8f;
-    public float zSmooth = 8f;
-    public Vector3 maxXAndZ;
-    public Vector3 minXAndZ;
+    public float xSpeed = 8f;
+    public float ySpeed = 8f;
+    public Vector3 targetPosition;
+    [Tooltip("0,1 - камера перемещаеться вместе с игроком, 1 - камера не сдвинеться пока игрок полностью не выйдет за рамки экрана")]
+    [Range(0.1f, 1.0f)] [SerializeField] private float vertialUnmovableField, horizontalUnmovableField;
+    [SerializeField]bool isMoving = false;
+    Camera mainCam;
 
+    [SerializeField] private Vector2 screenRectInRealWorld, unmovableRect;
 
-   // private Transform player;
-
-
+    private void Start()
+    {
+        float horisontal, vertical;
+        mainCam = GetComponent<Camera>();
+        vertical = mainCam.orthographicSize;
+        horisontal = vertical * Screen.width / Screen.height;
+        screenRectInRealWorld = new Vector2(horisontal, vertical);
+        unmovableRect = new Vector2(screenRectInRealWorld.x * horizontalUnmovableField, screenRectInRealWorld.y * vertialUnmovableField);
+        targetPosition = transform.position;
+    }
     bool CheckXMargin()
     {
-        return Mathf.Abs(transform.position.x - player.transform.position.x) > xMargin;
+        float diff = targetPosition.x - player.transform.position.x;
+        if (Mathf.Abs(diff) > unmovableRect.x)
+        {
+            targetPosition.x = targetPosition.x - 2*unmovableRect.x*diff/Mathf.Abs(diff);
+            return true;
+        }
+        return false;
     }
 
 
-    bool CheckZMargin()
+    bool CheckYMargin()
     {
-        return Mathf.Abs(transform.position.z - player.transform.position.z) > zMargin;
+        float diff = targetPosition.y - player.transform.position.y;
+        if (Mathf.Abs(diff) > unmovableRect.y)
+        {
+            targetPosition.y = targetPosition.y - 2*unmovableRect.y * diff / Mathf.Abs(diff);
+            return true;
+        }
+        return false;
     }
 
 
-    void FixedUpdate()
+    void LateUpdate()
     {
-        //TrackPlayer();
-        transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
+        Debug.Log("x: "+CheckXMargin());
+        Debug.Log("y: "+CheckYMargin());
+        MovingCamera();                                                                                                              
+        //transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
     }
 
-
-    void TrackPlayer()
+    public void MoveCamera(Vector3 targtPos)
     {
-        float targetX = transform.position.x;
-        float targetZ = transform.position.z;
-        if (CheckXMargin())
-            targetX = Mathf.Lerp(transform.position.x, player.transform.position.x, xSmooth * Time.deltaTime);
-        if (CheckZMargin())
-            targetZ = Mathf.Lerp(transform.position.z, player.transform.position.z, zSmooth * Time.deltaTime);
-        //targetX = Mathf.Clamp(targetX, minXAndZ.x, maxXAndZ.x);
-        //targetZ = Mathf.Clamp(targetZ, minXAndZ.z, maxXAndZ.z);
-        transform.position = new Vector3(targetX, transform.position.y, targetZ);
+        isMoving = true;
+        targetPosition = targtPos;
     }
+
+    private void MovingCamera()
+    {
+        float targetX;
+        float targetY;
+        targetX = Mathf.Lerp(transform.position.x, targetPosition.x, xSpeed * Time.deltaTime);
+        targetY = Mathf.Lerp(transform.position.y, targetPosition.y, ySpeed * Time.deltaTime);
+        transform.position = new Vector3(targetX, targetY, transform.position.z);
+    }
+
 }

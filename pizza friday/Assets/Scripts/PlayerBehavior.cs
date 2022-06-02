@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour
 {
-    [SerializeField] GameObject deadFloor;
     [SerializeField] GameObject startPosition;
     [SerializeField] float maxSpeed, deathSpeed;
     //[SerializeField] AudioClip landingSound, fatalitySound;
@@ -18,7 +17,6 @@ public class PlayerBehavior : MonoBehaviour
     private void Start()
     {
         pizza = GetComponent<PizzaTemperature>();
-        floor = deadFloor.GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         gravitySc = rb.gravityScale;
     }
