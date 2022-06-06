@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2932286684992532268}
   m_Layer: 0
-  m_Name: 'Camera Border '
+  m_Name: 'Camera border '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5075733695723699291}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9114300787700411842}
@@ -165,7 +165,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 9
+  orthographic size: 10.249298
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -203,8 +203,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xSpeed: 8
   ySpeed: 8
-  vertialUnmovableField: 1
+  targetPosition: {x: 0, y: 0, z: 0}
+  vertialUnmovableField: 0.75
   horizontalUnmovableField: 1
+  unmovableFieldVisualisation: {fileID: 5075733695723699291}
 --- !u!1001 &4693218533825570902
 PrefabInstance:
   m_ObjectHideFlags: 0
