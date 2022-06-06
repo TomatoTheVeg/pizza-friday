@@ -5,7 +5,7 @@ using UnityEngine;
 public class ObjectThrow : MonoBehaviour
 {
     Rigidbody2D rb;
-    [SerializeField] Joystick joy;
+    Joystick joy;
     [SerializeField] public float pushStrength;
     private Vector2 prevJoystickPosition = Vector2.zero;
     private bool onGround = false;
@@ -17,6 +17,7 @@ public class ObjectThrow : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        joy = GameObject.FindGameObjectWithTag("GameController").GetComponent<Joystick>();
     }
 
     // Update is called once per frame

@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerBehavior : MonoBehaviour
 {
@@ -13,10 +12,12 @@ public class PlayerBehavior : MonoBehaviour
     private Collider2D floor;
     private Vector2 speed;
     private float gravitySc;
+    CamBehaviour camera;
 
     private void Start()
     {
         pizza = GetComponent<PizzaTemperature>();
+        camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamBehaviour>();
         rb = GetComponent<Rigidbody2D>();
         gravitySc = rb.gravityScale;
     }
@@ -65,6 +66,10 @@ public class PlayerBehavior : MonoBehaviour
                 case PlatformType.DeadlyPlatform:
                     DeadlyPlatform dp = platform.GetComponent<DeadlyPlatform>();
                     TeleportToStart();
+                    break;
+                case PlatformType.WinningPlatform:
+                    TeleportToStart();
+                    SceneManager.LoadScene(1);
                     break;
             }
             /*
@@ -123,6 +128,15 @@ public class PlayerBehavior : MonoBehaviour
         if (collision.gameObject.TryGetComponent<StickyWall>(out w))
         {
             rb.gravityScale = gravitySc;
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        CameraProperiesChangeTrigger trig;
+        if (other.gameObject.TryGetComponent<CameraProperiesChangeTrigger>(out trig))
+        {
+            camera.ChangeCameraProperies( trig.vertialUnmovableField, trig.horizontalUnmovableField);
+            Debug.Log("Change");
         }
     }
 
