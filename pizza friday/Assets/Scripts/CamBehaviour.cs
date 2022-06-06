@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CamBehaviour : MonoBehaviour
 {
-    [SerializeField] GameObject player;
+    GameObject player;
     public float xSpeed = 8f;
     public float ySpeed = 8f;
     private Vector3 targetPosition;
@@ -18,6 +18,7 @@ public class CamBehaviour : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
         unmovableFieldVisualisation = transform.Find("Camera border").gameObject;
         float horisontal, vertical;
         mainCam = GetComponent<Camera>();
