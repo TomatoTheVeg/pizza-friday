@@ -5,5 +5,6 @@ public enum PlatformType
     BouncePlatform = 2,
     DeadlyPlatform = 3,
     StickyWall =4,
-    BreakingPlatform = 5
+    BreakingPlatform = 5,
+    WinningPlatform = 6
 }

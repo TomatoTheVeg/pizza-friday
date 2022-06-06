@@ -9,7 +9,7 @@ public class CamBehaviour : MonoBehaviour
     public float ySpeed = 8f;
     private Vector3 targetPosition;
     [Tooltip("0,1 - камера перемещаеться вместе с игроком, 1 - камера не сдвинеться пока игрок полностью не выйдет за рамки экрана")]
-    [Range(0.1f, 1.0f)] [SerializeField] private float vertialUnmovableField, horizontalUnmovableField;
+    [Range(0.1f, 1.0f)] public float vertialUnmovableField, horizontalUnmovableField;
     bool isMoving = false;
     Camera mainCam;
      GameObject unmovableFieldVisualisation;
@@ -55,16 +55,26 @@ public class CamBehaviour : MonoBehaviour
 
     void LateUpdate()
     {
-        Debug.Log("x: "+CheckXMargin());
-        Debug.Log("y: "+CheckYMargin());
+        CheckXMargin();
+        CheckYMargin();
         MovingCamera();                                                                                                              
         //transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
     }
+
+
 
     public void MoveCamera(Vector3 targtPos)
     {
         isMoving = true;
         targetPosition = targtPos;
+    }
+
+    public void ChangeCameraProperies(float _vertical, float _horizontal)
+    {
+        vertialUnmovableField = _vertical;
+        horizontalUnmovableField = _horizontal;
+        unmovableRect.Set(screenRectInRealWorld.x * horizontalUnmovableField, screenRectInRealWorld.y * vertialUnmovableField);
+        unmovableFieldVisualisation.transform.localScale *= unmovableRect;
     }
 
     private void MovingCamera()
