@@ -7,11 +7,14 @@ public class TrajectoryDraw : MonoBehaviour
     GameObject []points;
     [SerializeField] int  numberOfPoints;
     [SerializeField] float timeBetweenPoints, originalSizeOfTheDots;
-    [SerializeField] GameObject examplePoint, player;
+    [SerializeField] GameObject examplePoint;
+    GameObject player;
     ObjectThrow objthr;
-    [SerializeField] Joystick joystick;
+    Joystick joystick;
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        joystick = GameObject.FindGameObjectWithTag("GameController").GetComponent<Joystick>();
         points = new GameObject[numberOfPoints];
         float sizeOfTheDots = originalSizeOfTheDots;
         for (int i = 0; i < numberOfPoints; ++i) {

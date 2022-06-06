@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class HandleVisibility : MonoBehaviour
 {
     [SerializeField] Joystick joystick;
-    [SerializeField] AudioClip zoomClip;
-    [SerializeField] AudioSource src;
     Image im;
 
     private void Start()
@@ -20,11 +18,6 @@ public class HandleVisibility : MonoBehaviour
         if (joystick.Horizontal!=0||joystick.Vertical!=0)
         {
             im.enabled = true;
-            if (!src.isPlaying)
-            {
-                src.clip = zoomClip;
-                src.Play();
-            }
         }
         else
         {
