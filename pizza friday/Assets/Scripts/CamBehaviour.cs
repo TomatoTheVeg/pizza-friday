@@ -12,17 +12,20 @@ public class CamBehaviour : MonoBehaviour
     [Range(0.1f, 1.0f)] [SerializeField] private float vertialUnmovableField, horizontalUnmovableField;
     [SerializeField]bool isMoving = false;
     Camera mainCam;
+    GameObject unmovableFieldVisualisation;
 
     [SerializeField] private Vector2 screenRectInRealWorld, unmovableRect;
 
     private void Start()
     {
+        unmovableFieldVisualisation = gameObject.transform.Find("Camera border").gameObject;
         float horisontal, vertical;
         mainCam = GetComponent<Camera>();
         vertical = mainCam.orthographicSize;
         horisontal = vertical * Screen.width / Screen.height;
         screenRectInRealWorld = new Vector2(horisontal, vertical);
         unmovableRect = new Vector2(screenRectInRealWorld.x * horizontalUnmovableField, screenRectInRealWorld.y * vertialUnmovableField);
+        unmovableFieldVisualisation.transform.localScale *=unmovableRect;
         targetPosition = transform.position;
     }
     bool CheckXMargin()

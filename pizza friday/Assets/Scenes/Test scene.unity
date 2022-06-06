@@ -1289,8 +1289,8 @@ MonoBehaviour:
   xSpeed: 8
   ySpeed: 8
   targetPosition: {x: 0, y: 0, z: 0}
-  vertialUnmovableField: 0.8
-  horizontalUnmovableField: 0.8
+  vertialUnmovableField: 0.7
+  horizontalUnmovableField: 0.7
   isMoving: 0
   screenRectInRealWorld: {x: 0, y: 0}
   unmovableRect: {x: 0, y: 0}
@@ -1354,11 +1354,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &639679605 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7850037996587903994, guid: b1bcb6bbd2e89434782b6f7693ff6bd0, type: 3}
-  m_PrefabInstance: {fileID: 6853587332233557181}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &639679608 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 198754273316896232, guid: b1bcb6bbd2e89434782b6f7693ff6bd0, type: 3}
@@ -7435,6 +7430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1466562062}
   - component: {fileID: 1466562063}
+  - component: {fileID: 1466562064}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -7552,6 +7548,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!165 &1466562064
+AudioHighPassFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1466562061}
+  m_Enabled: 1
+  m_CutoffFrequency: 5000
+  m_HighpassResonanceQ: 1
 --- !u!1 &1474192656
 GameObject:
   m_ObjectHideFlags: 0
@@ -8699,7 +8705,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f5cb28032693c647a8b9f1c25c0fa4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deadFloor: {fileID: 639679605}
   startPosition: {fileID: 182216785}
   maxSpeed: 30
   deathSpeed: 12
