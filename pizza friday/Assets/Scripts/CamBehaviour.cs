@@ -7,18 +7,18 @@ public class CamBehaviour : MonoBehaviour
     [SerializeField] GameObject player;
     public float xSpeed = 8f;
     public float ySpeed = 8f;
-    public Vector3 targetPosition;
+    private Vector3 targetPosition;
     [Tooltip("0,1 - камера перемещаеться вместе с игроком, 1 - камера не сдвинеться пока игрок полностью не выйдет за рамки экрана")]
     [Range(0.1f, 1.0f)] [SerializeField] private float vertialUnmovableField, horizontalUnmovableField;
-    [SerializeField]bool isMoving = false;
+    bool isMoving = false;
     Camera mainCam;
-    GameObject unmovableFieldVisualisation;
+     GameObject unmovableFieldVisualisation;
 
-    [SerializeField] private Vector2 screenRectInRealWorld, unmovableRect;
+     private Vector2 screenRectInRealWorld, unmovableRect;
 
     private void Start()
     {
-        unmovableFieldVisualisation = gameObject.transform.Find("Camera border").gameObject;
+        unmovableFieldVisualisation = transform.Find("Camera border").gameObject;
         float horisontal, vertical;
         mainCam = GetComponent<Camera>();
         vertical = mainCam.orthographicSize;
