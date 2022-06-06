@@ -26,7 +26,7 @@ public class CamBehaviour : MonoBehaviour
         horisontal = vertical * Screen.width / Screen.height;
         screenRectInRealWorld = new Vector2(horisontal, vertical);
         unmovableRect = new Vector2(screenRectInRealWorld.x * horizontalUnmovableField, screenRectInRealWorld.y * vertialUnmovableField);
-        unmovableFieldVisualisation.transform.localScale *=unmovableRect;
+        unmovableFieldVisualisation.transform.localScale =unmovableRect;
         targetPosition = transform.position;
     }
     bool CheckXMargin()
@@ -74,7 +74,7 @@ public class CamBehaviour : MonoBehaviour
         vertialUnmovableField = _vertical;
         horizontalUnmovableField = _horizontal;
         unmovableRect.Set(screenRectInRealWorld.x * horizontalUnmovableField, screenRectInRealWorld.y * vertialUnmovableField);
-        unmovableFieldVisualisation.transform.localScale *= unmovableRect;
+        unmovableFieldVisualisation.transform.localScale = unmovableRect;
     }
 
     private void MovingCamera()

@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5075733695723699291
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2932286684992532268}
+  m_Layer: 0
+  m_Name: 'Camera Border '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2932286684992532268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5075733695723699291}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 9114300787700411842}
+  m_Father: {fileID: 6650817664788491274}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6650817664384297676
 GameObject:
   m_ObjectHideFlags: 0
@@ -29,7 +60,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6650817664788491274}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6650817664384297666
 MonoBehaviour:
@@ -102,8 +133,8 @@ Transform:
   m_LocalPosition: {x: -45.7, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6650817665881411379}
   - {fileID: 6650817664384297677}
+  - {fileID: 2932286684992532268}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -170,21 +201,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25cb08e631a53644a3d5ea5e91fd844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   xSpeed: 8
   ySpeed: 8
   vertialUnmovableField: 1
   horizontalUnmovableField: 1
---- !u!1001 &7138586180441918119
+--- !u!1001 &4693218533825570902
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 6650817664788491274}
+    m_TransformParent: {fileID: 2932286684992532268}
     m_Modifications:
     - target: {fileID: 4565850826769286548, guid: a12163939fb7c3647bd1e8bedbeaa8e8, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4565850826769286548, guid: a12163939fb7c3647bd1e8bedbeaa8e8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4565850826769286548, guid: a12163939fb7c3647bd1e8bedbeaa8e8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4565850826769286548, guid: a12163939fb7c3647bd1e8bedbeaa8e8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4565850826769286548, guid: a12163939fb7c3647bd1e8bedbeaa8e8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -196,7 +238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4565850826769286548, guid: a12163939fb7c3647bd1e8bedbeaa8e8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.74
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4565850826769286548, guid: a12163939fb7c3647bd1e8bedbeaa8e8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -228,7 +270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4565850826769286554, guid: a12163939fb7c3647bd1e8bedbeaa8e8, type: 3}
       propertyPath: m_Name
-      value: Camera border
+      value: sprite
       objectReference: {fileID: 0}
     - target: {fileID: 4565850826769286554, guid: a12163939fb7c3647bd1e8bedbeaa8e8, type: 3}
       propertyPath: m_IsActive
@@ -236,8 +278,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a12163939fb7c3647bd1e8bedbeaa8e8, type: 3}
---- !u!4 &6650817665881411379 stripped
+--- !u!4 &9114300787700411842 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4565850826769286548, guid: a12163939fb7c3647bd1e8bedbeaa8e8, type: 3}
-  m_PrefabInstance: {fileID: 7138586180441918119}
+  m_PrefabInstance: {fileID: 4693218533825570902}
   m_PrefabAsset: {fileID: 0}
