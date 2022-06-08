@@ -41,6 +41,7 @@ public class ObjectThrow : MonoBehaviour
     public void Push(Vector2 direction)
     {
         rb.velocity = rb.velocity+direction * pushStrength;
+        AudioManager.instance.PlaySound("jump");
        // src.clip = jumpSound;
         //src.Play();
     }

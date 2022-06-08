@@ -1,12 +1,9 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerBehavior : MonoBehaviour
 {
     [SerializeField] GameObject startPosition;
     [SerializeField] float maxSpeed, deathSpeed;
-    //[SerializeField] AudioClip landingSound, fatalitySound;
-   // [SerializeField] AudioSource src, deathSrc, musicSrc;
     Rigidbody2D rb;
     PizzaTemperature pizza;
     private Collider2D floor;
@@ -49,6 +46,7 @@ public class PlayerBehavior : MonoBehaviour
             {
                 case PlatformType.BasicPlatform:
                     BasicPlatform p = platform.GetComponent<BasicPlatform>();
+                    AudioManager.instance.PlaySound("fall");
                     break;
                 case PlatformType.BouncePlatform:
                     BouncePlatform bp = platform.GetComponent<BouncePlatform>();
@@ -69,7 +67,7 @@ public class PlayerBehavior : MonoBehaviour
                     break;
                 case PlatformType.WinningPlatform:
                     TeleportToStart();
-                    SceneManager.LoadScene(1);
+
                     break;
             }
             /*
@@ -136,7 +134,6 @@ public class PlayerBehavior : MonoBehaviour
         if (other.gameObject.TryGetComponent<CameraProperiesChangeTrigger>(out trig))
         {
             camera.ChangeCameraProperies( trig.vertialUnmovableField, trig.horizontalUnmovableField);
-            Debug.Log("Change");
         }
     }
 
@@ -150,6 +147,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         transform.position = startPosition.transform.position;
         rb.velocity = Vector2.zero;
+        AudioManager.instance.PlaySound("gameover");
         //deathSrc.clip = fatalitySound;
        // musicSrc.Pause();
        // deathSrc.Play();
