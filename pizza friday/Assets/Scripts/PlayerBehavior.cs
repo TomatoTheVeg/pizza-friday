@@ -66,7 +66,8 @@ public class PlayerBehavior : MonoBehaviour
                     TeleportToStart();
                     break;
                 case PlatformType.WinningPlatform:
-                    TeleportToStart();
+                    GameMaster.instance.LoadScene();
+                    AudioManager.instance.ChangeSoundWithscending(AudioManager.instance.FindSound("level loop"), AudioManager.instance.FindSound("menu master"), 5);
 
                     break;
             }

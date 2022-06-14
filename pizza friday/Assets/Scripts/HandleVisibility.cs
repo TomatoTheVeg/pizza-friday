@@ -17,8 +17,11 @@ public class HandleVisibility : MonoBehaviour
     {
         if (joystick.Horizontal!=0||joystick.Vertical!=0)
         {
+            if (!im.enabled)
+            {
+                AudioManager.instance.PlayUninterruptedSound("zoom");
+            }
             im.enabled = true;
-            AudioManager.instance.PlayUninterruptedSound("zoom");
         }
         else
         {

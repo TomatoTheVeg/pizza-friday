@@ -20,11 +20,12 @@ public class GameMaster : MonoBehaviour
             DontDestroyOnLoad(this);
 		}
         audioManager = AudioManager.instance;
+        audioManager.PlaySound("level loop");
     }
 
     public void LoadScene()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("Win");
     }
 
     // Update is called once per frame
