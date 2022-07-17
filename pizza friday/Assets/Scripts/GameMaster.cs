@@ -20,12 +20,22 @@ public class GameMaster : MonoBehaviour
             DontDestroyOnLoad(this);
 		}
         audioManager = AudioManager.instance;
-        audioManager.PlaySound("level loop");
+        audioManager.SwitchMusic(audioManager.FindSound("level loop"));
     }
 
     public void LoadScene()
     {
         SceneManager.LoadScene("Win");
+    }
+
+    public void MenuMusic()
+    {
+        audioManager.ChangeMusicWithAscending(audioManager.FindSound("menu master"), 1.2f);
+    }
+
+    public void LevelMusic()
+    {
+        audioManager.ChangeMusicWithAscending(audioManager.FindSound("level master"), 1.2f);
     }
 
     // Update is called once per frame

@@ -1,5 +1,6 @@
 using UnityEngine;
-
+using System.Collections;
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class AudioManager : MonoBehaviour
 
 	[SerializeField]
 	Sound[] sounds;
-	GameObject undestructableAudioSource; 
+	public Sound currentMusic;
 
 	void Awake()
 	{
@@ -35,56 +36,39 @@ public class AudioManager : MonoBehaviour
 			}
 
 		}
+		currentMusic = FindSound("silence");
 	}
 
-	void Start()
+	public void PlaySound(Sound sound)
 	{
-
+		sound.Play();
 	}
 
-	public void PlaySound(string _name)
-	{
-		for (int i = 0; i < sounds.Length; i++)
+	public void SwitchMusic(Sound sound)
+    {
+		sound.Play();
+		if (sound.isMusic)
 		{
-			if (sounds[i].name == _name)
-			{
-				sounds[i].Play();
-				return;
-			}
-		}
 
-		// no sound with _name
-		Debug.LogWarning("AudioManager: Sound not found in list, " + _name);
+			currentMusic.Stop();
+			currentMusic = sound;
+			return;
+		}
 	}
 
-	public void PlayUninterruptedSound(string _name)
+	public void PlayUninterruptedSound(Sound sound)
 	{
-		for (int i = 0; i < sounds.Length; i++)
-		{
-			if (sounds[i].name == _name)
-			{
-				sounds[i].PlayUninterrupted();
-				return;
-			}
-
-			// no sound with _name
-			
-		}
-		Debug.LogWarning("AudioManager: Sound not found in list, " + _name);
+		sound.PlayUninterrupted();
+		return;
 	}
-	public void StopSound(string _name)
+	public void StopSound(Sound sound)
 	{
-		for (int i = 0; i < sounds.Length; i++)
-		{
-			if (sounds[i].name == _name)
-			{
-				sounds[i].Stop();
-				return;
-			}
-		}
-
-		// no sound with _name
-		Debug.LogWarning("AudioManager: Sound not found in list, " + _name);
+		sound.Stop();
+        if (sound == currentMusic)
+        {
+			currentMusic = null;
+        }
+		return;
 	}
 
 	public Sound FindSound(string _name)
@@ -93,7 +77,6 @@ public class AudioManager : MonoBehaviour
 		{
 			if (sounds[i].name == _name)
 			{
-				sounds[i].PlayUninterrupted();
 				return sounds[i];
 			}
 
@@ -103,15 +86,91 @@ public class AudioManager : MonoBehaviour
 		return null;
 	}
 
-	public void ChangeSoundWithscending(Sound currentSound, Sound newSound, float transitionTime)
+	public void ChangeMusicWithAscending(Sound newSound, float transitionTime)
     {
-		currentSound.coroutine =StartCoroutine(currentSound.Fade(transitionTime));
-		newSound.coroutine =StartCoroutine(newSound.Ascend(transitionTime, newSound.defaultVolume, 22000));
+		if (currentMusic != null)
+		{
+			currentMusic.coroutine = StartCoroutine(currentMusic.Fade(transitionTime));
+		}
+		PlaySound(newSound);
+		newSound.coroutine = StartCoroutine(newSound.Ascend(transitionTime, newSound.defaultVolume, 22000));
+		currentMusic = newSound;
+	}
+
+	public void ChangeMusic(Sound newSound, float transitionTime)
+	{
+		if (currentMusic != null)
+		{
+			currentMusic.coroutine = StartCoroutine(currentMusic.Fade(transitionTime));
+		}
+		PlaySound(newSound);
+		currentMusic = newSound;
+	}
+
+	public void StopAllSounds()
+    {
+		foreach(Sound sound in sounds)
+        {
+			sound.Stop();
+        }
     }
 
-	public void ChangeSound(Sound currentSound, Sound newSound, float transitionTime)
-	{
-		currentSound.coroutine = StartCoroutine(currentSound.Fade(transitionTime));
-		newSound.Play();
+	public void StopAllMusic()
+    {
+		foreach (Sound sound in sounds)
+		{
+			if (sound.isMusic)
+			{
+				sound.Stop();
+				StopAllCoroutines();
+			}
+		}
 	}
+
+	public void ChangeAllSoundsVolume(float newVolume)
+    {
+		foreach (Sound sound in sounds)
+		{
+			sound.SetVolume(newVolume);
+		}
+	}
+
+	public void ChangeSoundEffectVolume(float newVolume)
+	{
+		foreach (Sound sound in sounds)
+		{
+			if (!sound.isMusic)
+			{
+				sound.SetVolume(newVolume);
+			}
+		}
+	}
+
+	public void ChangeMusicVolume(float newVolume)
+	{
+		foreach (Sound sound in sounds)
+		{
+			if (sound.isMusic)
+			{
+				sound.SetVolume(newVolume);
+			}
+		}
+	}
+
+	public void ChangeAllSoundsCutOffFrequency(float newFrequency)
+	{
+		foreach (Sound sound in sounds)
+		{
+			sound.SetCutOffFrequency(newFrequency);
+		}
+	}
+
+	public IEnumerator MusicListPlayer(List<Sound> soundsList)
+    {
+		foreach(Sound sound in soundsList)
+        {
+			sound.Play();
+			yield return new WaitForSeconds(sound.clip.length);
+        }
+    }
 }

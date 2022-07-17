@@ -19,10 +19,10 @@ public class Sound
 	[Range(0f, 0.5f)]
 	public float randomPitch = 0f;
 
-	public bool loop = false, withLowPassFilter= false;
+	public bool loop = false, isMusic = false, withLowPassFilter= false;
 
-	[SerializeField]private AudioSource source;
-	[SerializeField]private AudioLowPassFilter lowPassFilter;
+	private AudioSource source;
+	private AudioLowPassFilter lowPassFilter;
 
 	[HideInInspector]public Coroutine coroutine;
 
@@ -30,6 +30,7 @@ public class Sound
     {
 		lowPassFilter = filter;
 		lowPassFilter.cutoffFrequency = 22000;
+		lowPassFilter.lowpassResonanceQ = 0;
     }
 
 	public void SetSource(AudioSource _source)
@@ -40,6 +41,16 @@ public class Sound
 		source.volume = defaultVolume;
 		source.pitch = defaultPitch;
 	}
+
+	public void SetVolume(float newVolume)
+    {
+		source.volume = newVolume;
+    }
+
+	public void SetCutOffFrequency(float newCutOffFrequency)
+    {
+		lowPassFilter.cutoffFrequency = newCutOffFrequency;
+    }
 
 	public void Play()
 	{
@@ -57,6 +68,11 @@ public class Sound
 			source.pitch = defaultPitch * (1 + Random.Range(-randomPitch / 2f, randomPitch / 2f));
 			source.Play();
 		}
+    }
+
+	public void PlayWithDelay(float time)
+    {
+		source.PlayDelayed(time);
     }
 
 	public void Stop()
@@ -81,10 +97,13 @@ public class Sound
 			lowPassFilter.cutoffFrequency -= fadingFilterSpeed * Time.deltaTime;
 			yield return null;
         }
+		AudioManager.instance.StopSound(this);
     }
 
 	public IEnumerator Ascend(float ascendingTime, float volume, float cutOffFreq)
     {
+		source.volume = 0;
+		lowPassFilter.cutoffFrequency = 0;
 		float fadingVolumeSpeed = volume / ascendingTime;
 		float fadingFilterSpeed = cutOffFreq / ascendingTime;
 		while (source.volume<volume)

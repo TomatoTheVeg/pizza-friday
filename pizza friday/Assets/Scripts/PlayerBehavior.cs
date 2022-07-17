@@ -8,8 +8,10 @@ public class PlayerBehavior : MonoBehaviour
     PizzaTemperature pizza;
     private Collider2D floor;
     private Vector2 speed;
-    private float gravitySc;
+    private float gravitySc, rightSpriteScale;
     CamBehaviour camera;
+    Animator anim;
+    Transform sprite;
 
     private void Start()
     {
@@ -17,6 +19,9 @@ public class PlayerBehavior : MonoBehaviour
         camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamBehaviour>();
         rb = GetComponent<Rigidbody2D>();
         gravitySc = rb.gravityScale;
+        anim = transform.GetComponentInChildren<Animator>();
+        sprite = transform.Find("sprite");
+        rightSpriteScale = sprite.transform.localScale.x;
     }
     void Update()
     {
@@ -28,6 +33,14 @@ public class PlayerBehavior : MonoBehaviour
         {
             rb.velocity = rb.velocity * maxSpeed / rb.velocity.magnitude;
         }
+        if (rb.velocity.x > 0)
+        {
+            sprite.localScale = new Vector3(rightSpriteScale, sprite.localScale.y, sprite.localScale.z);
+        }
+        else if (rb.velocity.x < 0)
+        {
+            sprite.localScale = new Vector3(-rightSpriteScale, sprite.localScale.y, sprite.localScale.z);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -35,6 +48,7 @@ public class PlayerBehavior : MonoBehaviour
         Platform platform;
         if (collision.gameObject.TryGetComponent<Platform>(out platform))
         {
+            anim.SetBool("IsOnGround", true);
             if (collision.relativeVelocity.magnitude > deathSpeed && platform.canKill)
             {
                 TeleportToStart();
@@ -46,7 +60,7 @@ public class PlayerBehavior : MonoBehaviour
             {
                 case PlatformType.BasicPlatform:
                     BasicPlatform p = platform.GetComponent<BasicPlatform>();
-                    AudioManager.instance.PlaySound("fall");
+                    AudioManager.instance.PlaySound(AudioManager.instance.FindSound("fall"));
                     break;
                 case PlatformType.BouncePlatform:
                     BouncePlatform bp = platform.GetComponent<BouncePlatform>();
@@ -67,8 +81,7 @@ public class PlayerBehavior : MonoBehaviour
                     break;
                 case PlatformType.WinningPlatform:
                     GameMaster.instance.LoadScene();
-                    AudioManager.instance.ChangeSoundWithscending(AudioManager.instance.FindSound("level loop"), AudioManager.instance.FindSound("menu master"), 5);
-
+                    AudioManager.instance.ChangeMusicWithAscending(AudioManager.instance.FindSound("menu master"), 2.5f);
                     break;
             }
             /*
@@ -148,7 +161,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         transform.position = startPosition.transform.position;
         rb.velocity = Vector2.zero;
-        AudioManager.instance.PlaySound("gameover");
+        AudioManager.instance.PlaySound(AudioManager.instance.FindSound("gameover"));
         //deathSrc.clip = fatalitySound;
        // musicSrc.Pause();
        // deathSrc.Play();

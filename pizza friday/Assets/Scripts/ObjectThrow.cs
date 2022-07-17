@@ -10,14 +10,19 @@ public class ObjectThrow : MonoBehaviour
     private Vector2 prevJoystickPosition = Vector2.zero;
     private bool onGround = false;
     private Platform standingPlatform;
-    [SerializeField] Animator anim;
+    [SerializeField]private Animator anim;
+    Transform sprite;
+    float defaultScale;
    // [SerializeField] AudioClip jumpSound;
    // [SerializeField] AudioSource src;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = transform.GetComponentInChildren<Animator>();
         joy = GameObject.FindGameObjectWithTag("GameController").GetComponent<Joystick>();
+        sprite = transform.Find("sprite");
+        defaultScale = sprite.transform.localScale.x;
     }
 
     // Update is called once per frame
@@ -35,14 +40,23 @@ public class ObjectThrow : MonoBehaviour
         }
         prevJoystickPosition.x = joy.Horizontal;
         prevJoystickPosition.y = joy.Vertical;
+        if (prevJoystickPosition.x > 0)
+        {
+            sprite.localScale = new Vector3(defaultScale, sprite.localScale.y, sprite.localScale.z);
+        }
+        if (prevJoystickPosition.x < 0)
+        {
+            sprite.localScale = new Vector3(-defaultScale, sprite.localScale.y, sprite.localScale.z);
+        }
         // Debug.Log(joy.Horizontal + " " + joy.Vertical);
     }
 
     public void Push(Vector2 direction)
     {
         rb.velocity = rb.velocity+direction * pushStrength;
-        AudioManager.instance.PlaySound("jump");
-       // src.clip = jumpSound;
+        AudioManager.instance.PlaySound(AudioManager.instance.FindSound("jump"));
+        anim.SetTrigger("IsJumping");
+        // src.clip = jumpSound;
         //src.Play();
     }
 
@@ -51,7 +65,8 @@ public class ObjectThrow : MonoBehaviour
         Platform p;
         if (collision.gameObject.TryGetComponent<Platform>(out p)) { 
             onGround = true;
-            anim.SetBool("OnGround", true);
+            //anim.SetTrigger("IsLanding");
+            //anim.SetBool("OnGround", true);
             standingPlatform = collision.gameObject.GetComponent<Platform>();
         }
     }
@@ -60,7 +75,8 @@ public class ObjectThrow : MonoBehaviour
     {
         onGround = false;
         standingPlatform = null;
-        anim.SetBool("OnGround", false);
+        anim.SetBool("IsOnGround", false);
+        //anim.SetBool("OnGround", false);
     }
 
     public void StrengthChange(float str)

@@ -19,7 +19,6 @@ public class CamBehaviour : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        //unmovableFieldVisualisation = transform.Find("Camera border").gameObject;
         float horisontal, vertical;
         mainCam = GetComponent<Camera>();
         vertical = mainCam.orthographicSize;
@@ -34,6 +33,7 @@ public class CamBehaviour : MonoBehaviour
         float diff = targetPosition.x - player.transform.position.x;
         if (Mathf.Abs(diff) > unmovableRect.x)
         {
+            //targetPosition.x = targetPosition.x - 2*unmovableRect.x*diff/Mathf.Abs(diff);
             targetPosition.x = targetPosition.x - 2*unmovableRect.x*diff/Mathf.Abs(diff);
             return true;
         }
@@ -46,6 +46,7 @@ public class CamBehaviour : MonoBehaviour
         float diff = targetPosition.y - player.transform.position.y;
         if (Mathf.Abs(diff) > unmovableRect.y)
         {
+            //targetPosition.y = targetPosition.y - 2*unmovableRect.y * diff / Mathf.Abs(diff);
             targetPosition.y = targetPosition.y - 2*unmovableRect.y * diff / Mathf.Abs(diff);
             return true;
         }
