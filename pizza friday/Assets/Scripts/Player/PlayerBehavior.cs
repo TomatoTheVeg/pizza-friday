@@ -15,6 +15,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Start()
     {
+        GameMaster.player = this.gameObject;
         pizza = GetComponent<PizzaTemperature>();
         camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamBehaviour>();
         rb = GetComponent<Rigidbody2D>();
@@ -51,7 +52,7 @@ public class PlayerBehavior : MonoBehaviour
             anim.SetBool("IsOnGround", true);
             if (collision.relativeVelocity.magnitude > deathSpeed && platform.canKill)
             {
-                TeleportToStart();
+                TeleportToSave(GameMaster.instance.currSavePoint);
                 return;
             }
             Debug.Log(platform.PlatformType);
@@ -77,7 +78,7 @@ public class PlayerBehavior : MonoBehaviour
                     break;
                 case PlatformType.DeadlyPlatform:
                     DeadlyPlatform dp = platform.GetComponent<DeadlyPlatform>();
-                    TeleportToStart();
+                    TeleportToSave(GameMaster.instance.currSavePoint);
                     break;
                 case PlatformType.WinningPlatform:
                     GameMaster.instance.LoadScene();
@@ -165,5 +166,12 @@ public class PlayerBehavior : MonoBehaviour
         //deathSrc.clip = fatalitySound;
        // musicSrc.Pause();
        // deathSrc.Play();
+    }
+
+    public void TeleportToSave(SavePoint save)
+    {
+        transform.position = save.transform.position;
+        rb.velocity = Vector2.zero;
+        AudioManager.instance.PlaySound(AudioManager.instance.FindSound("gameover"));
     }
 }

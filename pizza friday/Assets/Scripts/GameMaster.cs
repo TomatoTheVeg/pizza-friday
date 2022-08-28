@@ -1,10 +1,35 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
 
 public class GameMaster : MonoBehaviour
 {
     public static GameMaster instance;
     private AudioManager audioManager;
+    public SavePoint currSavePoint = null;
+    public List<SavePoint> savePoints = new List<SavePoint>();
+    public static GameObject player = null;
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            if (instance != this)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+        audioManager = AudioManager.instance;
+        audioManager.SwitchMusic(audioManager.FindSound("level loop"));
+        savePoints = new List<SavePoint>();
+    }
+    /*
     void Start()
     {
         if (instance != null)
@@ -21,11 +46,13 @@ public class GameMaster : MonoBehaviour
 		}
         audioManager = AudioManager.instance;
         audioManager.SwitchMusic(audioManager.FindSound("level loop"));
-    }
+        savePoints = new List<SavePoint>();
+    }*/
 
     public void LoadScene()
     {
         SceneManager.LoadScene("Win");
+        currSavePoint = null;
     }
 
     public void MenuMusic()
@@ -38,8 +65,22 @@ public class GameMaster : MonoBehaviour
         audioManager.ChangeMusicWithAscending(audioManager.FindSound("level master"), 1.2f);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddSavePoint(SavePoint save)
     {
+        if(savePoints.Count==0)
+        {
+            savePoints.Add(save);
+            return;
+        }
+        for(int i = 0; i < savePoints.Count; i++)
+        {
+            if (savePoints[i].getSavenum > save.getSavenum)
+            {
+                savePoints.Insert(i, save);
+                return;
+            }
+        }
+        savePoints.Add(save);
     }
 }
+
