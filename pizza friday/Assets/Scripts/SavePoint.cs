@@ -11,6 +11,7 @@ public class SavePoint : MonoBehaviour
 
     void Start()
     {
+        gameObject.name = "Save zone " + saveNum;
         GameMaster.instance.AddSavePoint(this);
     }
 

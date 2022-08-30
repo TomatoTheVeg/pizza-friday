@@ -30,6 +30,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     [SerializeField] private AxisOptions axisOptions = AxisOptions.Both;
     [SerializeField] private bool snapX = false;
     [SerializeField] private bool snapY = false;
+    [SerializeField] private float deadengle = Mathf.PI/2;
 
     [SerializeField] protected RectTransform background = null;
     [SerializeField] private RectTransform handle = null;
@@ -78,7 +79,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
     {
-        if (magnitude > deadZone)
+        if (magnitude > deadZone&&normalised.y>0&&normalised.y>Mathf.Cos(deadengle))
         {
             if (magnitude > 1)
                 input = normalised;
