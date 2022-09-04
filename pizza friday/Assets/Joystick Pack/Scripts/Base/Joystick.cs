@@ -21,16 +21,23 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         set { deadZone = Mathf.Abs(value); }
     }
 
+    public float DeadAngle
+    {
+        get { return deadAngle; }
+        set { deadAngle = value; }
+    }
+
     public AxisOptions AxisOptions { get { return AxisOptions; } set { axisOptions = value; } }
     public bool SnapX { get { return snapX; } set { snapX = value; } }
     public bool SnapY { get { return snapY; } set { snapY = value; } }
 
     [SerializeField] private float handleRange = 1;
     [SerializeField] private float deadZone = 0;
+    [SerializeField] private float deadAngle = Mathf.PI/2;
+
     [SerializeField] private AxisOptions axisOptions = AxisOptions.Both;
     [SerializeField] private bool snapX = false;
     [SerializeField] private bool snapY = false;
-    [SerializeField] private float deadengle = Mathf.PI/2;
 
     [SerializeField] protected RectTransform background = null;
     [SerializeField] private RectTransform handle = null;
@@ -45,6 +52,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     {
         HandleRange = handleRange;
         DeadZone = deadZone;
+        DeadAngle = deadAngle;
         baseRect = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
         if (canvas == null)
@@ -79,7 +87,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
     {
-        if (magnitude > deadZone&&normalised.y>0&&normalised.y>Mathf.Cos(deadengle))
+        if (magnitude > deadZone&&normalised.y>0&&normalised.y>Mathf.Cos(deadAngle*Mathf.PI/180))
         {
             if (magnitude > 1)
                 input = normalised;
