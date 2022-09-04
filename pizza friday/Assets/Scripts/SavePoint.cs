@@ -21,7 +21,7 @@ public class SavePoint : MonoBehaviour
         {
             isSaved = true;
             GameMaster.instance.currSavePoint = this;
-            Debug.Log("Check point Num " + saveNum + " saved");
+            //Debug.Log("Check point Num " + saveNum + " saved");
         }
     }
 }
