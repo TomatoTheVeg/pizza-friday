@@ -27,7 +27,7 @@ public class TrajectoryDraw : MonoBehaviour
 
     void Update()
     {
-        if (joystick.Horizontal != 0 || joystick.Vertical != 0)
+        if ((joystick.Horizontal != 0 || joystick.Vertical != 0)&&!joystick.IsInDeadZone)
         {
             for (int i = 0; i < numberOfPoints; ++i)
             {

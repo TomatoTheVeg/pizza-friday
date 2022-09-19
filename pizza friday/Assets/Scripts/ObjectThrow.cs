@@ -12,6 +12,7 @@ public class ObjectThrow : MonoBehaviour
     private Platform standingPlatform;
     [SerializeField]private Animator anim;
     Transform sprite;
+    PlayerBehavior player;
     float defaultScale;
    // [SerializeField] AudioClip jumpSound;
    // [SerializeField] AudioSource src;
@@ -23,13 +24,15 @@ public class ObjectThrow : MonoBehaviour
         joy = GameObject.FindGameObjectWithTag("GameController").GetComponent<Joystick>();
         sprite = transform.Find("sprite");
         defaultScale = sprite.transform.localScale.x;
+        player = GetComponent<PlayerBehavior>();
     }
 
     // Update is called once per frame
     void Update()
     {
-       // Debug.Log(prevJoystickPosition.x + " " + prevJoystickPosition.y);
-        if (prevJoystickPosition != Vector2.zero && joy.Horizontal == 0f && joy.Vertical == 0f && onGround&&standingPlatform.isJumpable)
+        //Debug.Log(joy.IsInDeadZone/*"magnitude: "+Mathf.Sqrt(joy.Vertical*joy.Vertical+joy.Horizontal*joy.Horizontal)*/);
+        // Debug.Log(prevJoystickPosition.x + " " + prevJoystickPosition.y);
+        if (prevJoystickPosition != Vector2.zero && !joy.IsInDeadZone && joy.Vertical == 0f && player.canJump)
         {
             Push(prevJoystickPosition);
             BreakingPlatform p;
@@ -60,7 +63,7 @@ public class ObjectThrow : MonoBehaviour
         //src.Play();
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    /*private void OnCollisionStay2D(Collision2D collision)
     {
         Platform p;
         if (collision.gameObject.TryGetComponent<Platform>(out p)) { 
@@ -69,16 +72,16 @@ public class ObjectThrow : MonoBehaviour
             //anim.SetBool("OnGround", true);
             standingPlatform = collision.gameObject.GetComponent<Platform>();
         }
-    }
+    }*/
 
-    private void OnCollisionExit2D(Collision2D collision)
+    /*private void OnCollisionExit2D(Collision2D collision)
     {
         onGround = false;
         standingPlatform = null;
         anim.SetBool("IsOnGround", false);
         //anim.SetBool("OnGround", false);
     }
-
+    */
     public void StrengthChange(float str)
     {
         pushStrength = str;

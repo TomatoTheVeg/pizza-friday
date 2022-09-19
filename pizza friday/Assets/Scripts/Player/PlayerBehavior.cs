@@ -13,6 +13,7 @@ public class PlayerBehavior : MonoBehaviour
     Animator anim;
     Transform sprite;
     ContactPoint2D[] contactpoint = new ContactPoint2D[20];
+    public bool canJump =false;
 
     private void Start()
     {
@@ -52,15 +53,20 @@ public class PlayerBehavior : MonoBehaviour
         {
             if (contactpoint[i].normal == Vector2.up)
             {
-                Debug.Log("is up");
                 Platform platform;
                 if (collision.gameObject.TryGetComponent<Platform>(out platform))
                 {
+                    
                     anim.SetBool("IsOnGround", true);
                     if (collision.relativeVelocity.magnitude > deathSpeed && platform.canKill)
                     {
                         TeleportToSave(GameMaster.instance.currSavePoint);
                         return;
+                    }
+
+                    if (platform.isJumpable)
+                    {
+                        canJump = true;
                     }
                     //Debug.Log(platform.PlatformType);
 
@@ -152,6 +158,8 @@ public class PlayerBehavior : MonoBehaviour
         {
             rb.gravityScale = gravitySc;
         }
+        canJump = false;
+        anim.SetBool("IsOnGround", false);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

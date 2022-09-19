@@ -30,6 +30,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public AxisOptions AxisOptions { get { return AxisOptions; } set { axisOptions = value; } }
     public bool SnapX { get { return snapX; } set { snapX = value; } }
     public bool SnapY { get { return snapY; } set { snapY = value; } }
+    public bool IsInDeadZone { get { return isInDeadZone; } }
 
     [SerializeField] private float handleRange = 1;
     [SerializeField] private float deadZone = 0;
@@ -38,6 +39,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     [SerializeField] private AxisOptions axisOptions = AxisOptions.Both;
     [SerializeField] private bool snapX = false;
     [SerializeField] private bool snapY = false;
+    private bool isInDeadZone = false;
 
     [SerializeField] protected RectTransform background = null;
     [SerializeField] private RectTransform handle = null;
@@ -82,18 +84,47 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         input = (eventData.position - position) / (radius * canvas.scaleFactor);
         FormatInput();
         HandleInput(input.magnitude, input.normalized, radius, cam);
+        //if (input.normalized.y > Mathf.Cos(deadAngle))
+       /// {
         handle.anchoredPosition = input * radius * handleRange;
+        /*}
+        else
+        {
+            handle.anchoredPosition = new Vector2(input.normalized.x, Mathf.Cos(deadAngle * Mathf.PI / 180))*input.magnitude * radius * handleRange;
+        }*/
     }
 
     protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
     {
-        if (magnitude > deadZone&&normalised.y>0&&normalised.y>Mathf.Cos(deadAngle*Mathf.PI/180))
+        if (magnitude > 1)
         {
-            if (magnitude > 1)
-                input = normalised;
+            magnitude = 1;
         }
-        else
-            input = Vector2.zero;
+        if (magnitude > deadZone)
+        {
+            Debug.Log("magnitude: " + magnitude);
+            isInDeadZone = false;
+            if (normalised.y < Mathf.Cos(deadAngle * Mathf.PI / 180) && normalised.y > -Mathf.Cos(deadAngle * Mathf.PI / 180))
+            {
+                normalised.y = Mathf.Cos(deadAngle * Mathf.PI / 180);
+
+                if (normalised.x > Mathf.Sin(deadAngle * Mathf.PI / 180))
+                {
+                    normalised.x = Mathf.Sin(deadAngle * Mathf.PI / 180);
+                }
+                input = normalised * magnitude;
+            }
+            else if (normalised.y < -Mathf.Cos(deadAngle * Mathf.PI / 180))
+            {
+                isInDeadZone = true;
+                //input = Vector2.zero;
+            }
+        }
+        else {
+            isInDeadZone = true;
+            Debug.Log("deadzonecheck");
+            //input = Vector2.zero;
+        } 
     }
 
     private void FormatInput()
