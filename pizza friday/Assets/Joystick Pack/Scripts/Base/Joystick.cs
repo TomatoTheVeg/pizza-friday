@@ -102,16 +102,16 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         }
         if (magnitude > deadZone)
         {
-            //Debug.Log("magnitude: " + magnitude);
+           // Debug.Log("magnitude: " + magnitude);
             isInDeadZone = false;
             if (normalised.y < Mathf.Cos(deadAngle * Mathf.PI / 180) && normalised.y > -Mathf.Cos(deadAngle * Mathf.PI / 180))
             {
                 normalised.y = Mathf.Cos(deadAngle * Mathf.PI / 180);
-
+                /*
                 if (normalised.x > Mathf.Sin(deadAngle * Mathf.PI / 180))
                 {
                     normalised.x = Mathf.Sin(deadAngle * Mathf.PI / 180);
-                }
+                }*/
                 input = normalised * magnitude;
             }
             else if (normalised.y < -Mathf.Cos(deadAngle * Mathf.PI / 180))
@@ -119,12 +119,15 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
                 isInDeadZone = true;
                 //input = Vector2.zero;
             }
+            normalised.x = Mathf.Clamp(normalised.x, -Mathf.Sin(deadAngle * Mathf.PI / 180), Mathf.Sin(deadAngle * Mathf.PI / 180));
+            input = normalised * magnitude;
         }
         else {
             isInDeadZone = true;
             //Debug.Log("deadzonecheck");
             //input = Vector2.zero;
-        } 
+        }
+        //input = normalised * magnitude;
     }
 
     private void FormatInput()
