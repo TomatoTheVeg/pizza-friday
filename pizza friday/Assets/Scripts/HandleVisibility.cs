@@ -17,7 +17,14 @@ public class HandleVisibility : MonoBehaviour
 
     void Update()
     {
-        if (!joystick.IsInDeadZone)
+        //Debug.Log(joystick.IsInDeadZone);
+        if (joystick.IsInDeadZone||(joystick.Horizontal==0&&joystick.Vertical==0))
+        {
+            im.enabled = false;
+            AudioManager.instance.StopSound(AudioManager.instance.FindSound("zoom"));
+            anim.SetBool("IsZooming", false);
+        }
+        else
         {
             if (!im.enabled)
             {
@@ -25,12 +32,6 @@ public class HandleVisibility : MonoBehaviour
                 anim.SetBool("IsZooming", true);
             }
             im.enabled = true;
-        }
-        else
-        {
-            im.enabled = false;
-            AudioManager.instance.StopSound(AudioManager.instance.FindSound("zoom"));
-            anim.SetBool("IsZooming", false);
         }
     }
 }

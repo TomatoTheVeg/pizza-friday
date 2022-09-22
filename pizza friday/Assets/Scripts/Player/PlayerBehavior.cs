@@ -63,11 +63,6 @@ public class PlayerBehavior : MonoBehaviour
                         TeleportToSave(GameMaster.instance.currSavePoint);
                         return;
                     }
-
-                    if (platform.isJumpable)
-                    {
-                        canJump = true;
-                    }
                     //Debug.Log(platform.PlatformType);
 
                     switch (platform.PlatformType)
@@ -132,8 +127,12 @@ public class PlayerBehavior : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
         Platform p;
-        if(collision.gameObject.TryGetComponent<Platform>(out p)&&collision.relativeVelocity.y==0)
+        if(collision.gameObject.TryGetComponent<Platform>(out p)&&collision.relativeVelocity.y==0&&collision.GetContact(0).normal ==Vector2.up)
         {
+            if (p.isJumpable)
+            {
+                canJump = true;
+            }
             rb.velocity = rb.velocity / p.Roughness;
             pizza.currPizzaTemperature += p.temperatureChange * Time.deltaTime;
         }

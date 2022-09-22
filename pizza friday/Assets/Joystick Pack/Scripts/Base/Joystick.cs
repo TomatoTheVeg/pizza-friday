@@ -102,7 +102,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         }
         if (magnitude > deadZone)
         {
-            Debug.Log("magnitude: " + magnitude);
+            //Debug.Log("magnitude: " + magnitude);
             isInDeadZone = false;
             if (normalised.y < Mathf.Cos(deadAngle * Mathf.PI / 180) && normalised.y > -Mathf.Cos(deadAngle * Mathf.PI / 180))
             {
@@ -122,7 +122,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         }
         else {
             isInDeadZone = true;
-            Debug.Log("deadzonecheck");
+            //Debug.Log("deadzonecheck");
             //input = Vector2.zero;
         } 
     }
