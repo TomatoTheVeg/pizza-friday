@@ -79,12 +79,13 @@ public class PlayerBehavior : MonoBehaviour
                         case PlatformType.BreakingPlatform:
                             BreakingPlatform bkp = platform.GetComponent<BreakingPlatform>();
                             bkp.OnLanding();
-                            break;
+                            break;/*
                         case PlatformType.StickyWall:
                             StickyWall sw = platform.GetComponent<StickyWall>();
                             rb.gravityScale = gravitySc * (1 - sw.stickiness);
+                            Debug.Log("Stickcheck");
                             rb.velocity = Vector2.zero;
-                            break;
+                            break;*/
                         case PlatformType.DeadlyPlatform:
                             DeadlyPlatform dp = platform.GetComponent<DeadlyPlatform>();
                             TeleportToSave(GameMaster.instance.currSavePoint);
@@ -121,22 +122,39 @@ public class PlayerBehavior : MonoBehaviour
                     */
                 }
             }
+            else if (contactpoint[i].normal == Vector2.right|| contactpoint[i].normal == Vector2.left)
+            {
+                StickyWall sw;
+                if(collision.gameObject.TryGetComponent<StickyWall>(out sw))
+                {
+                    rb.gravityScale = gravitySc * (1 - sw.stickiness);
+                    rb.velocity = Vector2.zero;
+                }
+            }
         }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
     {
         Platform p;
-        if(collision.gameObject.TryGetComponent<Platform>(out p)&&collision.relativeVelocity.y==0&&collision.GetContact(0).normal ==Vector2.up)
+        if(collision.gameObject.TryGetComponent<Platform>(out p))
         {
-            if (p.isJumpable)
+            if (collision.relativeVelocity.y == 0 && collision.GetContact(0).normal == Vector2.up)
+            {
+                if (p.isJumpable)
+                {
+                    canJump = true;
+                }
+                rb.velocity = rb.velocity / p.Roughness;
+                pizza.currPizzaTemperature += p.temperatureChange * Time.deltaTime;
+            }
+            if (p.PlatformType == PlatformType.StickyWall)
             {
                 canJump = true;
             }
-            rb.velocity = rb.velocity / p.Roughness;
-            pizza.currPizzaTemperature += p.temperatureChange * Time.deltaTime;
         }
     }
+
     /*
         private void OnCollision2D(Collision2D collision)
         {

@@ -764,18 +764,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 928147990}
     m_Modifications:
-    - target: {fileID: 1251485110, guid: 07257648b36fe59499d2dad9f39e54c0, type: 3}
-      propertyPath: cam
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1251485110, guid: 07257648b36fe59499d2dad9f39e54c0, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 636260458}
-    - target: {fileID: 5864211742696751956, guid: 07257648b36fe59499d2dad9f39e54c0, type: 3}
-      propertyPath: cam
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5864211742696751956, guid: 07257648b36fe59499d2dad9f39e54c0, type: 3}
       propertyPath: player
       value: 
@@ -868,8 +856,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fixed Joystick Variant
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1251485110, guid: 07257648b36fe59499d2dad9f39e54c0, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07257648b36fe59499d2dad9f39e54c0, type: 3}
 --- !u!1 &636260458 stripped
 GameObject:
