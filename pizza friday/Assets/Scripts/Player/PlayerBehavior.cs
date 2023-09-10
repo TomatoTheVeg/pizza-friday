@@ -122,7 +122,7 @@ public class PlayerBehavior : MonoBehaviour
                     */
                 }
             }
-            else if (contactpoint[i].normal == Vector2.right|| contactpoint[i].normal == Vector2.left)
+            else if (contactpoint[i].normal == Vector2.right)
             {
                 StickyWall sw;
                 if(collision.gameObject.TryGetComponent<StickyWall>(out sw))
@@ -130,6 +130,17 @@ public class PlayerBehavior : MonoBehaviour
                     rb.gravityScale = gravitySc * (1 - sw.stickiness);
                     rb.velocity = Vector2.zero;
                 }
+                GameMaster.instance.joystick.state = JoystickState.Right;
+            }
+            else if (contactpoint[i].normal == Vector2.left)
+            {
+                StickyWall sw;
+                if (collision.gameObject.TryGetComponent<StickyWall>(out sw))
+                {
+                    rb.gravityScale = gravitySc * (1 - sw.stickiness);
+                    rb.velocity = Vector2.zero;
+                }
+                GameMaster.instance.joystick.state = JoystickState.Left;
             }
         }
     }
@@ -151,6 +162,7 @@ public class PlayerBehavior : MonoBehaviour
             if (p.PlatformType == PlatformType.StickyWall)
             {
                 canJump = true;
+                //rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -500, 0));
             }
         }
     }
@@ -174,6 +186,8 @@ public class PlayerBehavior : MonoBehaviour
         if (collision.gameObject.TryGetComponent<StickyWall>(out w))
         {
             rb.gravityScale = gravitySc;
+            GameMaster.instance.joystick.state = JoystickState.Up;
+
         }
         canJump = false;
         anim.SetBool("IsOnGround", false);

@@ -7,6 +7,7 @@ public class GameMaster : MonoBehaviour
 {
     public static GameMaster instance;
     private AudioManager audioManager;
+    public Joystick joystick;
     public SavePoint currSavePoint = null;
     public List<SavePoint> savePoints = new List<SavePoint>();
     public static GameObject player = null;
@@ -28,6 +29,7 @@ public class GameMaster : MonoBehaviour
         audioManager = AudioManager.instance;
         audioManager.SwitchMusic(audioManager.FindSound("level loop"));
         savePoints = new List<SavePoint>();
+        joystick = GameObject.Find("Fixed Joystick").GetComponent<FixedJoystick>();
     }
     /*
     void Start()
@@ -81,6 +83,12 @@ public class GameMaster : MonoBehaviour
             }
         }
         savePoints.Add(save);
+    }
+
+    public void ResetLevel()
+    {
+        currSavePoint = savePoints[0];
+        player.GetComponent<PlayerBehavior>().TeleportToStart();
     }
 }
 

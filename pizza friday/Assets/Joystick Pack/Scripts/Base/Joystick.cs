@@ -9,6 +9,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public float Vertical { get { return (snapY) ? SnapFloat(input.y, AxisOptions.Vertical) : input.y; } }
     public Vector2 Direction { get { return new Vector2(Horizontal, Vertical); } }
 
+    [SerializeField] public JoystickState state = JoystickState.Left;
+
     public float HandleRange
     {
         get { return handleRange; }
@@ -21,10 +23,16 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         set { deadZone = Mathf.Abs(value); }
     }
 
-    public float DeadAngle
+    public float DeadAngleUp
     {
-        get { return deadAngle; }
-        set { deadAngle = value; }
+        get { return deadAngleUp; }
+        set { deadAngleUp = value; }
+    }
+
+    public float DeadAngleSide
+    {
+        get { return deadAngleSide; }
+        set { deadAngleSide = value; }
     }
 
     public AxisOptions AxisOptions { get { return AxisOptions; } set { axisOptions = value; } }
@@ -34,7 +42,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     [SerializeField] private float handleRange = 1;
     [SerializeField] private float deadZone = 0;
-    [SerializeField] private float deadAngle = Mathf.PI/2;
+    [SerializeField] private float deadAngleUp = Mathf.PI / 2;
+    [SerializeField] private float deadAngleSide = Mathf.PI/2;
 
     [SerializeField] private AxisOptions axisOptions = AxisOptions.Both;
     [SerializeField] private bool snapX = false;
@@ -54,7 +63,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     {
         HandleRange = handleRange;
         DeadZone = deadZone;
-        DeadAngle = deadAngle;
+        DeadAngleUp = deadAngleUp;
+        DeadAngleSide = deadAngleSide;
         baseRect = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
         if (canvas == null)
@@ -96,14 +106,63 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
 
     protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
     {
+        Debug.Log(state);
         if (magnitude > 1)
         {
             magnitude = 1;
         }
         if (magnitude > deadZone)
         {
-           // Debug.Log("magnitude: " + magnitude);
             isInDeadZone = false;
+            switch (state)
+            {
+                case JoystickState.Up:
+                    if (normalised.y < Mathf.Cos(deadAngleUp * Mathf.PI / 180) && normalised.y > -Mathf.Cos(deadAngleUp * Mathf.PI / 180))
+                    {
+                        normalised.y = Mathf.Cos(deadAngleUp * Mathf.PI / 180);
+                        /*
+                        if (normalised.x > Mathf.Sin(deadAngle * Mathf.PI / 180))
+                        {
+                            normalised.x = Mathf.Sin(deadAngle * Mathf.PI / 180);
+                        }*/
+                        input = normalised * magnitude;
+                    }
+                    else if (normalised.y < -Mathf.Cos(deadAngleUp * Mathf.PI / 180))
+                    {
+                        isInDeadZone = true;
+                        //input = Vector2.zero;
+                    }
+                    normalised.x = Mathf.Clamp(normalised.x, -Mathf.Sin(deadAngleUp * Mathf.PI / 180), Mathf.Sin(deadAngleUp * Mathf.PI / 180));
+                    break;
+
+                case JoystickState.Right:
+                    if (normalised.x < Mathf.Cos(deadAngleSide * Mathf.PI / 180) && normalised.x > -Mathf.Cos(deadAngleSide * Mathf.PI / 180))
+                    {
+                        normalised.x = Mathf.Cos(deadAngleSide * Mathf.PI / 180);
+                    }
+                    else if (normalised.x < -Mathf.Cos(deadAngleSide * Mathf.PI / 180))
+                    {
+                        isInDeadZone = true;
+                    }
+                    normalised.y = Mathf.Clamp(normalised.y, -Mathf.Sin(deadAngleSide * Mathf.PI / 180), Mathf.Sin(deadAngleSide * Mathf.PI / 180));
+                    break;
+
+                case JoystickState.Left:
+
+                    if (normalised.x < Mathf.Cos(deadAngleSide * Mathf.PI / 180) && normalised.x > -Mathf.Cos(deadAngleSide * Mathf.PI / 180))
+                    {
+                        normalised.x = -Mathf.Cos(deadAngleSide * Mathf.PI / 180);
+                    }
+                    else if (normalised.x > Mathf.Cos(deadAngleSide * Mathf.PI / 180))
+                    {
+                        isInDeadZone = true;
+                    }
+                    normalised.y = Mathf.Clamp(normalised.y, -Mathf.Sin(deadAngleSide * Mathf.PI / 180), Mathf.Sin(deadAngleSide * Mathf.PI / 180));
+                    
+                    break;
+            }
+            /*
+           // Debug.Log("magnitude: " + magnitude);
             if (normalised.y < Mathf.Cos(deadAngle * Mathf.PI / 180) && normalised.y > -Mathf.Cos(deadAngle * Mathf.PI / 180))
             {
                 normalised.y = Mathf.Cos(deadAngle * Mathf.PI / 180);
@@ -111,7 +170,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
                 if (normalised.x > Mathf.Sin(deadAngle * Mathf.PI / 180))
                 {
                     normalised.x = Mathf.Sin(deadAngle * Mathf.PI / 180);
-                }*/
+                }
                 input = normalised * magnitude;
             }
             else if (normalised.y < -Mathf.Cos(deadAngle * Mathf.PI / 180))
@@ -119,7 +178,8 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
                 isInDeadZone = true;
                 //input = Vector2.zero;
             }
-            normalised.x = Mathf.Clamp(normalised.x, -Mathf.Sin(deadAngle * Mathf.PI / 180), Mathf.Sin(deadAngle * Mathf.PI / 180));
+        */
+            //normalised.x = Mathf.Clamp(normalised.x, -Mathf.Sin(deadAngle * Mathf.PI / 180), Mathf.Sin(deadAngle * Mathf.PI / 180));
             input = normalised * magnitude;
         }
         else {

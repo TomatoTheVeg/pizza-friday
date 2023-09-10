@@ -8,12 +8,14 @@ public class JoystickEditor : Editor
 {
     private SerializedProperty handleRange;
     private SerializedProperty deadZone;
-    private SerializedProperty deadAngle;
+    private SerializedProperty deadAngleUp;
+    private SerializedProperty deadAngleSide;
     private SerializedProperty axisOptions;
     private SerializedProperty snapX;
     private SerializedProperty snapY;
     protected SerializedProperty background;
     private SerializedProperty handle;
+    private SerializedProperty state;
 
     protected Vector2 center = new Vector2(0.5f, 0.5f);
 
@@ -21,12 +23,14 @@ public class JoystickEditor : Editor
     {
         handleRange = serializedObject.FindProperty("handleRange");
         deadZone = serializedObject.FindProperty("deadZone");
-        deadAngle = serializedObject.FindProperty("deadAngle");
+        deadAngleUp = serializedObject.FindProperty("deadAngleUp");
+        deadAngleSide = serializedObject.FindProperty("deadAngleSide");
         axisOptions = serializedObject.FindProperty("axisOptions");
         snapX = serializedObject.FindProperty("snapX");
         snapY = serializedObject.FindProperty("snapY");
         background = serializedObject.FindProperty("background");
         handle = serializedObject.FindProperty("handle");
+        state = serializedObject.FindProperty("state");
     }
 
     public override void OnInspectorGUI()
@@ -53,10 +57,12 @@ public class JoystickEditor : Editor
     {
         EditorGUILayout.PropertyField(handleRange, new GUIContent("Handle Range", "The distance the visual handle can move from the center of the joystick."));
         EditorGUILayout.PropertyField(deadZone, new GUIContent("Dead Zone", "The distance away from the center input has to be before registering."));
-        EditorGUILayout.PropertyField(deadAngle, new GUIContent("Dead Angle", "max Angle to Y-Axel till whith the touch would be registratable"));
+        EditorGUILayout.PropertyField(deadAngleUp, new GUIContent("Dead Angle Up", "max Angle to Y-Axel till whith the touch would be registratable in upward state"));
+        EditorGUILayout.PropertyField(deadAngleSide, new GUIContent("Dead Angle Side", "max Angle to Y-Axel till whith the touch would be registratable in side state"));
         EditorGUILayout.PropertyField(axisOptions, new GUIContent("Axis Options", "Which axes the joystick uses."));
         EditorGUILayout.PropertyField(snapX, new GUIContent("Snap X", "Snap the horizontal input to a whole value."));
         EditorGUILayout.PropertyField(snapY, new GUIContent("Snap Y", "Snap the vertical input to a whole value."));
+        EditorGUILayout.PropertyField(state, new GUIContent("State", "State of the joystick"));
     }
 
     protected virtual void DrawComponents()
