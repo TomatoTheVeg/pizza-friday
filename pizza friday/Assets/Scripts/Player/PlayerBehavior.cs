@@ -71,11 +71,13 @@ public class PlayerBehavior : MonoBehaviour
                             BasicPlatform p = platform.GetComponent<BasicPlatform>();
                             AudioManager.instance.PlaySound(AudioManager.instance.FindSound("fall"));
                             break;
+                            /*
                         case PlatformType.BouncePlatform:
                             BouncePlatform bp = platform.GetComponent<BouncePlatform>();
                             rb.velocity = bp.bounceBoost * (speed + 2 * VectorProjection(speed, collision.collider.gameObject.transform.rotation));
                             //Debug.Log("Bounce " + 2 * VectorProjection(speed, collision.collider.gameObject.transform.rotation));
                             break;
+                            */
                         case PlatformType.BreakingPlatform:
                             BreakingPlatform bkp = platform.GetComponent<BreakingPlatform>();
                             bkp.OnLanding();
@@ -129,8 +131,8 @@ public class PlayerBehavior : MonoBehaviour
                 {
                     rb.gravityScale = gravitySc * (1 - sw.stickiness);
                     rb.velocity = Vector2.zero;
+                    GameMaster.instance.joystick.state = JoystickState.Right;
                 }
-                GameMaster.instance.joystick.state = JoystickState.Right;
             }
             else if (contactpoint[i].normal == Vector2.left)
             {
@@ -139,11 +141,23 @@ public class PlayerBehavior : MonoBehaviour
                 {
                     rb.gravityScale = gravitySc * (1 - sw.stickiness);
                     rb.velocity = Vector2.zero;
+                    GameMaster.instance.joystick.state = JoystickState.Left;
+
                 }
-                GameMaster.instance.joystick.state = JoystickState.Left;
             }
+
+            BouncePlatform bp;
+            if (collision.gameObject.TryGetComponent<BouncePlatform>(out bp))
+            {
+                rb.velocity = bp.bounceBoost * (speed + 2 * VectorProjection(speed, collision.collider.gameObject.transform.rotation));
+                //Debug.Log("Bounce " + 2 * VectorProjection(speed, collision.collider.gameObject.transform.rotation));
+                break;
+            }
+
+
+
         }
-    }
+        }
 
     private void OnCollisionStay2D(Collision2D collision)
     {

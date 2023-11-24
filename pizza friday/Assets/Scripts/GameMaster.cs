@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class GameMaster : MonoBehaviour
 {
     public static GameMaster instance;
-    private AudioManager audioManager;
+    [SerializeField] private AudioManager audioManager;
     public Joystick joystick;
     public SavePoint currSavePoint = null;
     public List<SavePoint> savePoints = new List<SavePoint>();
@@ -26,30 +26,17 @@ public class GameMaster : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this);
         }
-        audioManager = AudioManager.instance;
-        audioManager.SwitchMusic(audioManager.FindSound("level loop"));
+        //audioManager = AudioManager.instance;
+        //audioManager.SwitchMusic(audioManager.FindSound("level loop"));
         savePoints = new List<SavePoint>();
         joystick = GameObject.Find("Fixed Joystick").GetComponent<FixedJoystick>();
     }
-    /*
+    
     void Start()
     {
-        if (instance != null)
-		{
-			if (instance != this)
-			{
-				Destroy(this.gameObject);
-			}
-		}
-		else
-		{
-			instance = this;
-            DontDestroyOnLoad(this);
-		}
         audioManager = AudioManager.instance;
         audioManager.SwitchMusic(audioManager.FindSound("level loop"));
-        savePoints = new List<SavePoint>();
-    }*/
+    }
 
     public void LoadScene()
     {
