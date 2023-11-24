@@ -9,16 +9,14 @@ public class AudioManager : MonoBehaviour
 
 	[SerializeField]
 	Sound[] sounds;
+	[SerializeField] float volume;
 	public Sound currentMusic;
 
 	void Awake()
 	{
 		if (instance != null)
 		{
-			if (instance != this)
-			{
-				Destroy(this.gameObject);
-			}
+			Destroy(this.gameObject);
 		}
 		else
 		{
@@ -30,6 +28,7 @@ public class AudioManager : MonoBehaviour
 			GameObject _go = new GameObject("Sound_" + i + "_" + sounds[i].name);
 			_go.transform.SetParent(this.transform);
 			sounds[i].SetSource(_go.AddComponent<AudioSource>());
+			sounds[i].SetVolume(volume);
 			if (sounds[i].withLowPassFilter)
 			{
 				sounds[i].SetLowPassFilter(_go.AddComponent<AudioLowPassFilter>());
