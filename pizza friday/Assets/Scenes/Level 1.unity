@@ -806,13 +806,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8775007603309500177, guid: 07257648b36fe59499d2dad9f39e54c0, type: 3}
       propertyPath: m_Name
-      value: Fixed Joystick Variant
+      value: Fixed Joystick
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07257648b36fe59499d2dad9f39e54c0, type: 3}
 --- !u!1 &636260458 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1234159844015301808, guid: 0d76c7e414039e64b85ad0a6e4a991a3, type: 3}
+  m_PrefabInstance: {fileID: 299782474}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &636260464 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 1234159844015301814, guid: 0d76c7e414039e64b85ad0a6e4a991a3, type: 3}
   m_PrefabInstance: {fileID: 299782474}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &644492804
@@ -1020,10 +1025,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5075733695723699291, guid: 37c4872b9838a64419783ce4fd4a5278, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 417274531, guid: 37c4872b9838a64419783ce4fd4a5278, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 636260464}
     - target: {fileID: 6650817664788491274, guid: 37c4872b9838a64419783ce4fd4a5278, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -2567,6 +2572,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -8686495572201324214, guid: 789b64c00d473b04ba96a6e544d7e019, type: 3}
+      propertyPath: vertialUnmovableField
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8686495572201324214, guid: 789b64c00d473b04ba96a6e544d7e019, type: 3}
+      propertyPath: horizontalUnmovableField
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 5629481628278338592, guid: 789b64c00d473b04ba96a6e544d7e019, type: 3}
       propertyPath: m_Name
       value: CameraChangeTrigger
